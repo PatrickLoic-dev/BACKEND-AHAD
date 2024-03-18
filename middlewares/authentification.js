@@ -1,4 +1,4 @@
-const jwt =  require('jwsonwebtoken');
+const jwt =  require('jsonwebtoken');
 const User = require('../models/user')
 
 //Authentification à l'aide du token
