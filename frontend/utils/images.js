@@ -1,0 +1,1 @@
+export const image1 = '../assets/illustration.jpg';
