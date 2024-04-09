@@ -1,11 +1,11 @@
-import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
-import { abstractBackground, avatar, calendar, card, chevron, search } from '../../utils/images';
+import { abstractBackgroundBlue, avatar, calendar, card, chevron, investing, scale, search } from '../../utils/images';
 import { principalColor, textSecondaryColor } from '../../utils/constantes';
+import React from 'react';
 
-const Acceuil = () => {
-    return (
-        <ImageBackground   source={abstractBackground} style={styles.container}>
+const Rubrique = () => {
+  return (
+    <ImageBackground  source={abstractBackgroundBlue} style={styles.container}>
              
 
             <View style = {styles.head}>
@@ -16,40 +16,24 @@ const Acceuil = () => {
             </View>
 
             <View style = {styles.solde}>
+                <Text style = {{fontSize : 14, color : textSecondaryColor, fontWeight : '600'}}>Available balance</Text>
                 <View style = {styles.montant}>
                     <Text style = {{fontSize : 24, fontWeight : '900'}}>XAF</Text>
                     <Text style = {{fontSize : 56, fontWeight : '900'}}>2,500</Text>
                 </View>
-                <Text style = {{marginLeft : 35, fontSize : 14, color : textSecondaryColor, fontWeight : '600'}}>Available balance</Text>
+                <Text style = {{fontSize : 14, color : textSecondaryColor, fontWeight : '600'}}>Vous</Text>
             </View>
 
-            <View style = {styles.actions}>
-                <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn}></TouchableOpacity>
-                    <Text style = {{marginTop : 4, fontWeight : '900'}}>Dépôt</Text>
-                </View>
-
-                <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn}></TouchableOpacity>
-                    <Text style = {{marginTop : 4, fontWeight : '900'}}>Retrait</Text>
-                </View>
-
-                <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn}></TouchableOpacity>
-                    <Text style = {{marginTop : 4,fontWeight : '900'}}>Cotiser</Text>
-                </View>
-
-                <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn}></TouchableOpacity>
-                    <Text style = {{marginTop : 4, fontWeight : '900'}}>More</Text>
-                </View>
+            <View style = {styles.graph}>
+                <Image source = {investing} style = {{marginBottom : 18, height : 144}}/>           
+                <Image source = {scale} style = {{marginBottom : 30, height : 36}}/>           
             </View>
 
 
             <View style = {styles.bottomSheet}>
                 <View style = {styles.search}>
                     <Image source={calendar} style = {styles.icon}/>
-                    <Text style = {{fontSize : 12, color : textSecondaryColor}}>Historique</Text>
+                    <Text style = {{fontSize : 12, color : textSecondaryColor, fontWeight: "600"}}>Historique</Text>
                     <Image source={search} style = {styles.icon}/>
                 </View>
                 <ScrollView showsVerticalScrollIndicator = {false} style = {styles.view}>
@@ -171,35 +155,26 @@ const styles = StyleSheet.create({
         marginTop : 64
     }, 
     montant : {
-        marginTop : 28,
+        marginTop : 8,
+        marginBottom : 8,
         display : "flex",
         flexDirection : "row",
-        marginLeft : 30,
         alignItems : "baseline"
     },
-    actions : {
-        display :"flex",
-        flexDirection : "row",
-        marginLeft : 20,
-        marginTop :48,
-        marginBottom : 48
-    },
-    button : {
-        marginRight : 37,
-        alignItems : "center"
-    },
-    btn : {
-        backgroundColor : principalColor,
-        height : 56,
-        width : 56,
-        borderRadius : 50
+    solde : {
+        display : "flex",
+        alignItems : "center",
+        justifyContent : "center",
+        marginTop : 32,
+        marginBottom : 24
     },
     bottomSheet : {
-        width : 395,
+        width : 385,
         height: 800,
+        marginLeft : 2,
         backgroundColor : '#FFF',
-        borderTopLeftRadius : 32,
-        borderTopRightRadius : 32
+        borderTopLeftRadius : 48,
+        borderTopRightRadius : 48
     },
     search : {
         display : "flex",
@@ -221,10 +196,17 @@ const styles = StyleSheet.create({
     },
     avatar : {
         marginLeft : 16,
+        height : 40,
+        width : 40,
         marginRight :8
-    }, content : {
+    }, 
+    content : {
         marginRight : 180
+    },
+    graph : {
+        marginTop : 24,
+        marginBottom: 32
     }
 });
 
-export default Acceuil;
+export default Rubrique;
