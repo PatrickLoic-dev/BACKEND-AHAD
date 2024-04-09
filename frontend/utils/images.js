@@ -10,4 +10,3 @@ export const calendar = require('../assets/Calendar.png');
 export const search = require('../assets/Search.png');
 export const avatar = require("../assets/List item element.png");
 export const arrow_right = require("../assets/Arrow_right.png");
-
