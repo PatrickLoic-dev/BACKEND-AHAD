@@ -1,22 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import SplashScreen from './splashscreen'
+import Acceuil from './view/wallet_transaction_history/acceuil';
+import OnBoarding from './view/onboarding/onBoarding';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/* <Text>Open up App.js to start working on your app!</Text> */}
-      <StatusBar style="auto" />
-      <SplashScreen></SplashScreen>
-    </View>
+      
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  
 });
