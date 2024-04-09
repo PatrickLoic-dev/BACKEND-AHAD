@@ -195,9 +195,14 @@ router.post('/users', async (req, res, next) => {
 /* Endpoints de cotisation */
 
 .post('/cotisation/Init', authentification, async(req, res) => {
+    const user = req.user;
     const rubrique = await Rubrique.findOne(req.rubrique)
 
-    const cotisation = new Cotisation(req.body); 
+    const cotisation = new Cotisation(
+        userId = user._id,
+        montant = req.body.montant,
+        rubrique = req.rubrique
+    ); 
     if(req.montant < rubrique.montant) {
         res.status(400).send("Montant insuffisant !")
     }  
