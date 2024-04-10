@@ -164,8 +164,9 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
 
 
 /* Endpoints pour l'envoie de creation d'une demande de prêt */
-.post('/pret', authentification, async (req, res) => {
+.post('/pret', [authentification, upload.array('preuves')],async (req, res) => {
     const pret = new Pret(req.body);
+    pret.userId = req.user._id;
     if(req.files) {
         let path = '';
         req.files.forEach(function(files, index, arr) {
