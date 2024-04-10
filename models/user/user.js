@@ -48,10 +48,13 @@ const userSchema = new mongoose.Schema({
         type : Number,
         default : 0
     },
+    avatar : {
+        type: String, 
+    },
     rubriques : [
         {
-           type : mongoose.Schema.Types.ObjectId,
-           ref : 'Rubrique'
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Rubrique'
         }
     ],
     authTokens: [{

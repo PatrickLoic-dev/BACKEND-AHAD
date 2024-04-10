@@ -20,7 +20,7 @@ const pretSchema = new mongoose.Schema({
     }],
     statut : {
         type :String,
-        default : 'false'
+        default : 'Non validé'
     }
 
     // Autres champs du modèle...

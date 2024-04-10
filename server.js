@@ -14,7 +14,6 @@ const PORT = process.env.PORT
 //Middlewares
 app.use(express.json())
 app.use(cors())
-app.use(bodyParser.json())
 
 //Fixation du suffixe "/api/v1/ à nos routes
 readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)))
@@ -22,7 +21,7 @@ readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + 
 const server = () => {
    db();
    app.listen(PORT, () => {
-    console.log('You are listening to port : ', PORT);
+      console.log('You are listening to port : ', PORT);
    })
 }
 

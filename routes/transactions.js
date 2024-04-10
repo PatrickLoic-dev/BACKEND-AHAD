@@ -4,13 +4,16 @@ const Rubrique = require('../models/rubrique/rubrique')
 const authentification = require('../middlewares/authentification.js');
 const Pret = require('../models/pret/pret.js');
 const Cotisation = require('../models/cotisation/cotisation.js');
+const upload = require('../middlewares/upload.js');
 const router = express.Router();
 
 
 /* Ensembles de routes lié à l'utilisateur */
-router.post('/users', async (req, res, next) => {
+router.post('/users', upload.single('avatar'), async (req, res, next) => {
                 const user = new User(req.body);
-
+                    if(req.file) {
+                        user.avatar = req.file.path;
+                    }
                 try {
                     const saveUser = await user.save();
                     res.status(200).send(saveUser);
@@ -160,27 +163,17 @@ router.post('/users', async (req, res, next) => {
 })
 
 
-
-// Webhook to validate a transaction
-.post('/transactions/validate', authentification, async (req, res) => {
-    try {
-        // Get the transaction ID from the request body
-        const transactionId = req.body.transactionId;
-
-        // Perform validation logic here
-        // ...
-
-        // Send a success response
-        res.send('Transaction validated successfully');
-    } catch (error) {
-        // Handle any errors that occur during validation
-        res.status(500).send(error);
-    }
-})
-
 /* Endpoints pour l'envoie de creation d'une demande de prêt */
-.post('/pret', authentification,async (req, res) => {
+.post('/pret', authentification, async (req, res) => {
     const pret = new Pret(req.body);
+    if(req.files) {
+        let path = '';
+        req.files.forEach(function(files, index, arr) {
+            path = path + files.path + ',';
+        })
+        path = path.substring(0, path.lastIndexOf(","));
+        pret.preuves = req.file.path;
+    }
     try {
         const savePret = await pret.save();
         res.status(200).send(savePret);
@@ -223,5 +216,52 @@ if(cotisations == null){
 }
 
 })
+
+.get('/cotisations/rubrique/:id', authentification, async (req, res) => {
+    const rubriqueId = req.params.id;
+    try {
+        const transactions = await Cotisation.find({ rubrique: rubriqueId, userId : user._id  });
+        let totalAmount = 0;
+        transactions.forEach(transaction => {
+            totalAmount += transaction.amount;
+        });
+        res.send({ totalAmount });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+.get('/cotisations/rubrique/:id', authentification, async (req, res) => {
+    const rubriqueId = req.params.id;
+    try {
+        const transactions = await Cotisation.find({ rubrique: rubriqueId }).populate('user', 'name avatar');
+        let totalAmount = 0;
+        const users = transactions.map(transaction => {
+            totalAmount += transaction.amount;
+            return {
+                name: transaction.user.name,
+                avatar: transaction.user.avatar
+            };
+        });
+        res.send({ totalAmount, users });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+.get('/cotisations/rubrique/:id', authentification, async (req, res) => {
+    const user = req.user;
+    const rubriqueId = req.params.id;
+    try {
+        const transactions = await Cotisation.find({ rubrique: rubriqueId, userId : user._id }).populate('user', 'name avatar');
+        res.send(transactions);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+
+
+
 
 module.exports = router;
