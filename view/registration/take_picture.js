@@ -1,8 +1,11 @@
+
 import { Camera, CameraType } from 'expo-camera';
 import { useState, useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import CropScreen from './crop_screen';
+import { bntPicture, picture, reverse } from '../../utils/images';
 
-export default function App() {
+export default function TakePicture({ navigation }) {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const cameraRef = useRef(null);
@@ -17,7 +20,7 @@ export default function App() {
     // Camera permissions are not granted yet
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Text style={{ textAlign: 'center' }}>Nous avons besoin de votre permission pour ouvrir la caméra</Text>
         <Button onPress={requestPermission} title="Grant Permission" />
       </View>
     );
@@ -32,47 +35,73 @@ export default function App() {
       try {
         const { uri } = await cameraRef.current.takePictureAsync();
         setPhotoUri(uri);
+        navigation.navigate('CropScreen', { photoUri: uri });
       } catch (error) {
         console.log('Failed to take photo', error);
       }
     }
   };
-
+//   la photo doit recouvrir tout l'ecran et l'utilisateur doit recadrer s'il veut avant d'enregistrer
   return (
     <View style={styles.container}>
+        <View style={styles.container1}></View>
       <Camera style={styles.camera} type={type} ref={cameraRef}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={takePhoto}>
-            <Text style={styles.text}>Take Photo</Text>
-          </TouchableOpacity>
-        </View>
       </Camera>
-      {photoUri && (
-        <View style={styles.previewContainer}>
-          <Text style={styles.previewText}>Taken Photo:</Text>
-          <Image source={{ uri: photoUri }} style={styles.previewImage} />
+      <View style={styles.container2}><Text style={styles.title}>Prenez un selfie</Text></View>
+        <View style={styles.buttonContainer}>
+            <View style={styles.buttonContainer1}>
+            <TouchableOpacity style={styles.buttonPicturePict} onPress={''}>
+            <Image source={picture}></Image>
+          </TouchableOpacity>
+            </View>
+            <View style={styles.buttonContainer1}>
+            <TouchableOpacity style={styles.buttonPictTake} onPress={takePhoto}>
+            <Image source={bntPicture}></Image>
+          </TouchableOpacity>
+            </View>
+            <View style={styles.buttonContainer1}>
+            <TouchableOpacity style={styles.buttonReverse} onPress={toggleCameraType}>
+                    <Image source={reverse}></Image>
+                </TouchableOpacity>
+            </View>
         </View>
-      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    flex:1,
+    // justifyContent: 'center',
+    margin:0,
+    padding:0,
+  },
+  container1:{
+    flex:1,
+    backgroundColor:'black',
+  },
+  container2:{
+    backgroundColor:'black',
+    padding:10
+  },
+  title:{
+    color:'white',
+    fontSize:18,
+    fontWeight:'bold'
   },
   camera: {
-    flex: 1,
+    height:450
+  },
+  buttonContainer1:{
+    justifyContent:'center',
+    alignItems:'center'
   },
   buttonContainer: {
-    flex: 1,
+    backgroundColor:'black',
+    flex:1,
     flexDirection: 'row',
-    backgroundColor: 'transparent',
-    margin: 64,
+    padding: 64,
+    justifyContent: 'space-between'
   },
   button: {
     flex: 1,
@@ -84,17 +113,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
-  previewContainer: {
-    marginTop: 16,
+  photo: {
+    flex: 1,
+    resizeMode: 'contain',
+  },
+  buttonContainerCrop: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
-  },
-  previewText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  previewImage: {
-    width: 300,
-    height: 200,
+    marginBottom: 16,
   },
 });
