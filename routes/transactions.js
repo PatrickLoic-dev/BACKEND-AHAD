@@ -265,7 +265,7 @@ if(cotisations == null){
 // Endpoint pour le webhook de paiement
 .post('/webhook', async (req, res) => {
     const event = req.body;
-    const paiment = new Paiment();
+    const paiement = new Paiment();
     
     try {
         // Retrieve the request's body
