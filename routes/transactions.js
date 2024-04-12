@@ -267,7 +267,8 @@ if(cotisations == null){
     const paiement = new Paiement({
         userId: req.user._id,
         amount: paymentData.transaction.amount,
-        status: paymentData.status
+        status: paymentData.status,
+        trans_reference: paymentData.transaction.reference
     });
     try {
         // Sauvegarder les données de paiement dans la base de données

@@ -14,7 +14,10 @@ const paimentSchema = new mongoose.Schema({
         type: String,
         required: true
     },  
-    
+    trans_reference : {
+        type: String,
+        required: true
+    }
     // ...
 }, {timestamps : true});
 
