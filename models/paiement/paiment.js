@@ -1,23 +1,18 @@
 const mongoose = require('mongoose');
 
 const paimentSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    montant: {
-        type: Number,
-        required: true
-    },
-    status: {
+    id : {
         type: String,
+        required: true
+    },
+    event : {
+        type: String,
+        required: true
+    },
+    data : {
+        type: Object,
         required: true
     },  
-    trans_reference : {
-        type: String,
-        required: true
-    }
     // ...
 }, {timestamps : true});
 
