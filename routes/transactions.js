@@ -272,6 +272,7 @@ if(cotisations == null){
         res.status(200).send("Données de paiement sauvegardées avec succès");
     } catch (error) {
         res.status(500).send(error);
+        console.log('Erreur : '+ error);
     }
 })
 
