@@ -271,7 +271,7 @@ if(cotisations == null){
         // Retrieve the request's body
         // Sauvegarder les données de paiement dans la base de données
         paiement.save();
-        // res.status(200).send("Données de paiement sauvegardées avec succès");
+         res.status(200).send("Données de paiement sauvegardées avec succès");
     } catch (error) {
         console.log('Event : '+ event);
         res.status(500).send(error);
