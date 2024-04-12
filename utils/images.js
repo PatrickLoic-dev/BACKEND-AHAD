@@ -16,3 +16,7 @@ export const arrow_right = require("../assets/Arrow_right.png");
 
 export const investing = require("../assets/Total investing.png");
 export const scale = require("../assets/Scale.png");
+
+export const illustrationInscription = require("../assets/Illustration.png");
+export const listLoard = require("../assets/listLoard.png");
+export const listValid = require("../assets/listValid.png");
