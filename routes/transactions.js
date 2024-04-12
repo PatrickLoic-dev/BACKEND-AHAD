@@ -5,6 +5,7 @@ const authentification = require('../middlewares/authentification.js');
 const Pret = require('../models/pret/pret.js');
 const Cotisation = require('../models/cotisation/cotisation.js');
 const upload = require('../middlewares/upload.js');
+const Paiment = require('../models/paiement/paiment.js');
 const router = express.Router();
 
 
@@ -264,6 +265,7 @@ if(cotisations == null){
 // Endpoint pour le webhook de paiement
 .post('/webhook', async (req, res) => {
     const event = req.body;
+    const paiment = new Paiment();
     
     try {
         // Retrieve the request's body
