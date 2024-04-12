@@ -263,7 +263,6 @@ if(cotisations == null){
 
 // Endpoint pour le webhook de paiement
 .post('/webhook', async (req, res) => {
-    const paymentData = req.body;
     
     try {
             // Retrieve the request's body
