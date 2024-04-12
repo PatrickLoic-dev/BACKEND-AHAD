@@ -265,12 +265,12 @@ if(cotisations == null){
 // Endpoint pour le webhook de paiement
 .post('/webhook', async (req, res) => {
     const event = req.body;
-    const paiement = new Paiment();
+    const paiement = new Paiment(event);
     
     try {
         // Retrieve the request's body
         // Sauvegarder les données de paiement dans la base de données
-        paiement.save(event);
+        paiement.save();
         // res.status(200).send("Données de paiement sauvegardées avec succès");
     } catch (error) {
         console.log('Event : '+ event);
