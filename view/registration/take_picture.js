@@ -1,9 +1,11 @@
 
 import { Camera, CameraType } from 'expo-camera';
 import { useState, useRef } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { Button, StyleSheet, Text, TouchableOpacity, View, Image, ImageComponent } from 'react-native';
 import CropScreen from './crop_screen';
 import { bntPicture, picture, reverse } from '../../utils/images';
+import ImagePicker from './upload_picture';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function TakePicture({ navigation }) {
   const [type, setType] = useState(CameraType.back);
@@ -26,6 +28,22 @@ export default function TakePicture({ navigation }) {
     );
   }
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
   function toggleCameraType() {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
@@ -35,9 +53,9 @@ export default function TakePicture({ navigation }) {
       try {
         const { uri } = await cameraRef.current.takePictureAsync();
         setPhotoUri(uri);
-        navigation.navigate('CropScreen', { photoUri: uri });
+        // navigation.navigate('CropScreen', { photoUri: uri });
       } catch (error) {
-        console.log('Failed to take photo', error);
+        console.log('Veillez recommencer plutart', error);
       }
     }
   };
@@ -50,7 +68,7 @@ export default function TakePicture({ navigation }) {
       <View style={styles.container2}><Text style={styles.title}>Prenez un selfie</Text></View>
         <View style={styles.buttonContainer}>
             <View style={styles.buttonContainer1}>
-            <TouchableOpacity style={styles.buttonPicturePict} onPress={''}>
+            <TouchableOpacity style={styles.buttonPicturePict} onPress={pickImage}>
             <Image source={picture}></Image>
           </TouchableOpacity>
             </View>

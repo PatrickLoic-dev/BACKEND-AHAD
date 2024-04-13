@@ -28,8 +28,7 @@
     "react-navigation": "^5.0.0",
     "expo-file-system": "~16.0.8",
     "expo-camera": "~14.1.2",
-    "expo-image-picker": "~14.7.1",
-    "react-native-image-crop-picker": "^0.40.3"
+    "expo-image-picker": "~14.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
