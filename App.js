@@ -8,6 +8,7 @@ import Rubrique from './view/rubriques/rubrique';
 import TakePicture from './view/registration/take_picture';
 import CropScreen from './view/registration/crop_screen';
 import Loarder from './view/registration/loarder';
+import PinCodeInput from './view/pin_code_settings/pin_code';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -16,16 +17,13 @@ export default function App() {
     <Stack.Navigator>
     <Stack.Screen 
           name="Loarder" 
-          component={Loarder}
+          component={PinCodeInput}
           options={{ headerTitle: '',headerTransparent: true,}} />
     <Stack.Screen 
           name="TakePicture" 
           component={TakePicture}
           options={{ headerTitle: '',headerTransparent: true,}} />
-    <Stack.Screen 
-          name="CropScreen" 
-          component={CropScreen}
-          options={{ headerTitle: '',headerTransparent: true,}} />
+
     </Stack.Navigator>
   </NavigationContainer>
   );

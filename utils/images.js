@@ -20,3 +20,9 @@ export const scale = require("../assets/Scale.png");
 export const illustrationInscription = require("../assets/Illustration.png");
 export const listLoard = require("../assets/listLoard.png");
 export const listValid = require("../assets/listValid.png");
+
+export const bntPicture = require("../assets/photo_button.png");
+export const picture = require("../assets/picture.png");
+export const reverse = require("../assets/reverse.png");
+export const deleteCode = require("../assets/delete_code.png");
+export const lockCode = require("../assets/lock_code.png");
