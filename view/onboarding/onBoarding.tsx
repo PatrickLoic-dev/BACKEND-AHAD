@@ -5,6 +5,7 @@ import { OnBoardingColor, principalColor, red } from "../../utils/constantes";
 import Page, { PAGE_WIDTH } from "../../components/Page";
 import { arrow_right } from "../../utils/images";
 import Dot from "../../components/Dot";
+import React from "react";
 import Animated, {
   useAnimatedScrollHandler,
   useDerivedValue,
