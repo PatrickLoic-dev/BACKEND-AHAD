@@ -49,7 +49,7 @@ const BirthScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:principalColor,
+    backgroundColor:'white',
     flex: 1,
     // padding:30,
   },

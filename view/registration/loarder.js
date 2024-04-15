@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Alert,StyleSheet } from 'react-native';
+import { View,Text, Alert,StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { illustrationInscription, listValid } from '../../utils/images';
 
 const Loarder = ({ navigation }) => {
@@ -11,7 +11,7 @@ const Loarder = ({ navigation }) => {
         <Text style={styles.title}>Patientez quelques instants</Text>
         <Text style={styles.titleDescript}>Nous analysons la vérification de votre profil</Text>
     </View>
-    <View style={containList}>
+    <View style={styles.containList}>
         <View style={styles.containItem}>
             <Image source={listValid}></Image>
             <Text>Documents téléchargés</Text>
@@ -39,7 +39,26 @@ const styles = StyleSheet.create({
         flex:1,
         paddingTop:50,
         padding:10,
+        backgroundColor:'white'
         
+    },
+    containTitle:{
+
+    },
+    containItem:{
+
+    },
+    containIllustration:{
+
+    },
+    containList:{
+
+    },
+    titleDescript:{
+
+    },
+    title:{
+
     },
 
     btnContainer: {
