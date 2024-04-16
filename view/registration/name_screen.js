@@ -33,12 +33,12 @@ const NameScreen = ({ navigation }) => {
         </View>
         <View style={styles.form}>
         <Input
-          valeur="Nom"
+          placeholder="Nom"
           value={nom}
           onChangeText={text => setNom(text)}
         />
           <Input
-          valeur="Prénom"
+          placeholder="Prénom"
           value={prenom}
           onChangeText={text => setPrenom(text)}
         />
@@ -87,19 +87,16 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     position: 'absolute',
-    bottom: '-145%',
-    right: '6%',
-    backgroundColor: '#007AFF',
-    borderRadius: 30,
-    paddingVertical: 10,
-    paddingHorizontal: 130,
-    display:'flex',
-    flexDirection:'row',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 3,
+        bottom: '-145%',
+        right: 5,
+        backgroundColor: '#000',
+        borderRadius: 30,
+        paddingVertical: 12,
+        paddingHorizontal: 114,
+        justifyContent:'center',
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
   },
   floatingButtonText: {
     color: 'white',

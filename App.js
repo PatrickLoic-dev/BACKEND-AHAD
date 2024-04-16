@@ -4,61 +4,35 @@ import { NavigationContainer } from '@react-navigation/native';
 
 
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+
+import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Acceuil from './view/wallet_transaction_history/acceuil';
 import Rubrique from './view/rubriques/rubrique';
 import Account from './view/my_account/account';
+import Login from './view/login/login';
+import BottomtabNavigator from './routes/tabNavigator';
 
 
-const Tab = createBottomTabNavigator();
+
+const Stack = createStackNavigator();
 
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-    initialRouteName='Acceuil'
-    screenOptions={{
-        tabBarActiveTintColor: '#FDFF96',
-    }}>
-    <Tab.Screen
-        name='Portefeuille'
-        component={Acceuil}
-        options={{
-            tabBarLabel: 'Portefeuille',
-            tabBarIcon: ({ color, size, borderColor }) => (
-                <MaterialCommunityIcons name="home" color={color} size={size} borderColor = '#000'/>
-            ),
-            tabBarLabelStyle : {color: '#000'},
-            headerShown : false
-        }}
-    />
-    <Tab.Screen
-        name='Rubrique'
-        component={Rubrique}
-        options={{
-            tabBarLabel: 'Rubrique',
-            tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="bell" color={color} size={size} />
-            ),
-            tabBarLabelStyle : {color: '#000'},
-            headerShown : false
-        }}
-    />
-    <Tab.Screen
-    name="Profile"
-    component={Account}
-    options={{
-        tabBarLabel: 'Profile',
-        tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
-        ),
-        tabBarLabelStyle : {color: '#000'},
-        headerShown : false
-    }}
-  />
-</Tab.Navigator>
+    <Stack.Navigator
+      initialRouteName='Login'>
+    <Stack.Screen 
+          name="Login" 
+          component={Login}
+          options={{ headerTitle: '',headerTransparent: true,}} />
+    <Stack.Screen 
+          name="Home" 
+          component={BottomtabNavigator}
+          options={{ headerTitle: '',headerTransparent: true,}} />
+
+    </Stack.Navigator>
     </NavigationContainer>
   );
 }

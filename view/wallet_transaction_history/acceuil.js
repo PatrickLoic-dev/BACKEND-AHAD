@@ -1,12 +1,28 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { abstractBackground, avatar, calendar, card, chevron, search } from '../../utils/images';
 import { principalColor, textSecondaryColor } from '../../utils/constantes';
+import { Profile } from '../../api/userAPI';
 
 const Acceuil = () => {
+
+    const [user, setUser] = useState('');
+
+    useEffect(() => {
+        GetProfile();
+    }, []);
+
+    const GetProfile = () =>{
+        Profile().then((result) => {
+            setUser(result.data);
+            console.log(user);
+        }).catch(err => {
+            console.error("Error"+ err);    
+        });
+    }
+
     return (
         <ImageBackground   source={abstractBackground} style={styles.container}>
-             
 
             <View style = {styles.head}>
                 <Image source={card} style = {styles.icon}></Image>
@@ -18,7 +34,7 @@ const Acceuil = () => {
             <View style = {styles.solde}>
                 <View style = {styles.montant}>
                     <Text style = {{fontSize : 24, fontWeight : '900'}}>XAF</Text>
-                    <Text style = {{fontSize : 56, fontWeight : '900'}}>2,500</Text>
+                    <Text style = {{fontSize : 56, fontWeight : '900'}}>{user.solde}</Text>
                 </View>
                 <Text style = {{marginLeft : 35, fontSize : 14, color : textSecondaryColor, fontWeight : '600'}}>Available balance</Text>
             </View>

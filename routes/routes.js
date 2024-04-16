@@ -9,26 +9,27 @@ import TakePicture from './view/registration/take_picture';
 import CropScreen from './view/registration/crop_screen';
 import Loarder from './view/registration/loarder';
 import PinCodeInput from './view/pin_code_settings/pin_code';
+import tabNavigator from './tabNavigator';
+import Login from '../view/login/login';
 
 
 const Stack = createStackNavigator();
 
 const routes = () => {
   return (
-    <NavigationContainer>
+
     <Stack.Navigator>
     <Stack.Screen 
-          name="Loarder" 
-          component={PinCodeInput}
+          name="Login" 
+          component={Login}
           options={{ headerTitle: '',headerTransparent: true,}} />
     <Stack.Screen 
-          name="TakePicture" 
-          component={TakePicture}
+          name="Home" 
+          component={tabNavigator}
           options={{ headerTitle: '',headerTransparent: true,}} />
 
     </Stack.Navigator>
-  </NavigationContainer>
   )
 }
 
-export default routes
+export default routes;

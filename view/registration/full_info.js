@@ -30,12 +30,12 @@ const FullInfo = ({ navigation }) => {
         </View>
         <View style={styles.form}>
         <Input
-          valeur="Email"
+          placeholder="Email"
         /><Input
-          valeur="Ville"
+          placeholder="Ville"
         />
         <Input
-          valeur="Adresse"
+          placeholder="Adresse"
         />
         <InputTel/>
         </View>
@@ -91,20 +91,15 @@ const styles = StyleSheet.create({
   floatingButton: {
     position: 'absolute',
     bottom: '-145%',
-    right: '6%',
-    backgroundColor: '#007AFF',
+    right: 5,
+    backgroundColor: '#000',
     borderRadius: 30,
-    paddingVertical: 10,
-    paddingHorizontal: 100,
+    paddingVertical: 12,
+    paddingHorizontal: 114,
     justifyContent:'center',
     display:'flex',
     flexDirection:'row',
-    shadowColor: '#000',
     alignItems:'center',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 3,
   },
   floatingButtonText: {
     color: 'white',

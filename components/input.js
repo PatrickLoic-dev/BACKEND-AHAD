@@ -1,7 +1,14 @@
 import React, {useRef, useState} from 'react';
 import {Animated, StyleSheet, Text, TextInput, View} from 'react-native';
 
-const Input = (val) => {
+const Input = ({placeholder, onChangeText}) => {
+  
+
+  const handleTextChange = (val) => {
+    setText(val);
+    onChangeText(val); // Pass the text value to the parent component
+  };
+
   const [text, setText] = useState('');
   const floatingLabelAnimation = useRef(
     new Animated.Value(text ? 1 : 0),
@@ -42,12 +49,12 @@ const Input = (val) => {
   return (
     <View style={styles.container}>
       <Animated.Text style={[styles.label, floatingLabelStyle]}>
-        {val.valeur}
+        {placeholder}
       </Animated.Text>
       <TextInput
         style={styles.input}
         value={text}
-        onChangeText={val => setText(val)}
+        onChangeText={handleTextChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />

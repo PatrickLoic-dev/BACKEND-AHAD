@@ -7,47 +7,53 @@ import Rubrique from '../view/rubriques/rubrique';
 import Account from '../view/my_account/account';
 
 
-const Tab = createBottomTabNavigator();
 
-function tabNavigator()  {
+export default function BottomtabNavigator()  {
+
+    const Tab = createBottomTabNavigator();
+
 return(
     <Tab.Navigator
-        initialRouteName='Acceuil'
-        screenOptions={{
-            tabBarActiveTintColor: '#e91e63',
-        }}>
-        <Tab.Screen
-            name='Portefeuille'
-            component={Acceuil}
-            options={{
-                tabBarLabel: 'Portefeuille',
-                tabBarIcon: ({ color, size }) => (
-                    <MaterialCommunityIcons name="home" color={color} size={size} />
-                ),
-            }}
-        />
-        <Tab.Screen
-            name='Rubrique'
-            component={Rubrique}
-            options={{
-                tabBarLabel: 'Rubrique',
-                tabBarIcon: ({ color, size }) => (
-                    <MaterialCommunityIcons name="bell" color={color} size={size} />
-                ),
-            }}
-        />
-        <Tab.Screen
-        name="Profile"
-        component={Account}
+    initialRouteName='Acceuil'
+    screenOptions={{
+        tabBarActiveTintColor: '#FDFF96',
+    }}>
+    <Tab.Screen
+        name='Portefeuille'
+        component={Acceuil}
         options={{
-            tabBarLabel: 'Profile',
-            tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="account" color={color} size={size} />
+            tabBarLabel: 'Portefeuille',
+            tabBarIcon: ({ color, size, borderColor }) => (
+                <MaterialCommunityIcons name="home" color={color} size={size} borderColor = '#000'/>
             ),
+            tabBarLabelStyle : {color: '#000'},
+            headerShown : false
         }}
-      />
-    </Tab.Navigator>
+    />
+    <Tab.Screen
+        name='Rubrique'
+        component={Rubrique}
+        options={{
+            tabBarLabel: 'Rubrique',
+            tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="bell" color={color} size={size} />
+            ),
+            tabBarLabelStyle : {color: '#000'},
+            headerShown : false
+        }}
+    />
+    <Tab.Screen
+    name="Profile"
+    component={Account}
+    options={{
+        tabBarLabel: 'Profile',
+        tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} />
+        ),
+        tabBarLabelStyle : {color: '#000'},
+        headerShown : false
+    }}
+  />
+</Tab.Navigator>
 )
 }
-
-export default tabNavigator;

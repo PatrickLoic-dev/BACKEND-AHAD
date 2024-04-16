@@ -1,14 +1,31 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Switch } from 'react-native';
 import { abstractBackgroundBlue, abstractBackgroundBlueSVG, avatar, calendar, card, chevron, faceIDIcon, investing, mailIcon, pAvatar, pencil, phoneIcon, scale, search, userIcon } from '../../utils/images';
 import { principalColor, textSecondaryColor } from '../../utils/constantes';
+import { Profile } from '../../api/userAPI';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const authToken = AsyncStorage.getItem('AuthToken');
 
 const Account = () => {
 
     const [isEnabled, setIsEnabled] = useState(false);
+    const [user, setUser] = useState('');
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    useEffect(() => {
+        GetProfile();
+    }, []);
+
+    const GetProfile = () =>{
+        Profile().then((result) => {
+            setUser(result.data);
+            console.log(user);
+        }).catch(err => {
+            console.error("Error"+ err);    
+        });
+        // console.log(authToken._j);
+    }
 return (
     <ImageBackground  source={abstractBackgroundBlue} style={styles.container}>
         <Text style = {styles.head}>My account</Text>
@@ -23,7 +40,7 @@ return (
                 <Image source={userIcon}/>
                 <View>
                     <Text style = {{fontSize  :12, fontWeight : '600', color: textSecondaryColor, marginBottom : 8}}>Votre Nom</Text>
-                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor}}>Kangue Kwelle</Text>
+                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor}}>{user.name}</Text>
                 </View>
             </View>
 
@@ -32,7 +49,7 @@ return (
                 <Image source={userIcon}/>
                 <View>
                     <Text style = {{fontSize  :12, fontWeight : '600', color: textSecondaryColor, marginBottom : 8}}>Vos Prénoms</Text>
-                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor}}>Patrick Loic</Text>
+                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor}}>{user.surname}</Text>
                 </View>
             </View>
 
@@ -41,7 +58,7 @@ return (
                 <Image source={phoneIcon}/>
                 <View>
                     <Text style = {{fontSize  :12, fontWeight : '600', color: textSecondaryColor, marginBottom : 8}}>Numéro</Text>
-                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor}}>+237698800797</Text>
+                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor}}>+237{user.telephone}</Text>
                 </View>
             </View>
 
@@ -50,7 +67,7 @@ return (
                 <Image source={mailIcon}/>
                 <View>
                     <Text style = {{fontSize  :12, fontWeight : '600', color: textSecondaryColor, marginBottom : 8}}>Email</Text>
-                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor}}>kangueloic9@gmail.com</Text>
+                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor}}>{user.email}</Text>
                 </View>
             </View>
 
