@@ -33,8 +33,8 @@ const Acceuil = () => {
 
             <View style = {styles.solde}>
                 <View style = {styles.montant}>
-                    <Text style = {{fontSize : 24, fontWeight : '900'}}>XAF</Text>
                     <Text style = {{fontSize : 56, fontWeight : '900'}}>{user.solde}</Text>
+                    <Text style = {{fontSize : 24, fontWeight : '900'}}>XAF</Text>
                 </View>
                 <Text style = {{marginLeft : 35, fontSize : 14, color : textSecondaryColor, fontWeight : '600'}}>Available balance</Text>
             </View>
@@ -230,6 +230,8 @@ const styles = StyleSheet.create({
     },
     view : {
         marginTop:18,
+        marginBottom : 12,
+        height :"auto"
     }, 
     item : {
         display : "flex", 

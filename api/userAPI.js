@@ -31,3 +31,17 @@ export const Profile = async data => {
         return error.response.data
     }
 }
+
+export const logout = async () => {
+    try {
+        const result = await apiManager("/users/logout/all", {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${authToken._j}`
+            }
+        });
+        return result;
+    } catch (error) {
+        return error.response.data;
+    }
+}

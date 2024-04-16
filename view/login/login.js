@@ -16,6 +16,7 @@ import Input from "../../components/input";
 import { login } from "../../api/userAPI";
 import { parseJsonConfigFileContent } from "typescript";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { textSecondaryColor } from "../../utils/constantes";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -60,7 +61,7 @@ export default function Login({ navigation }) {
               <Text style={styles.title}>Bienvenue !</Text>
             </View>
           </View>
-          
+
           <View>
             <Input placeholder="Email" onChangeText={handleEmailChange} />
             <Input
@@ -77,6 +78,13 @@ export default function Login({ navigation }) {
               <Text style={styles.floatingButtonText}>Connexion</Text>
             </TouchableOpacity>
           </View>
+          <View>
+            <TouchableOpacity style={styles.link}>
+              <Text style={{ color: textSecondaryColor, fontWeight: "600" }}>
+                Pas encore membre ?
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -88,10 +96,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
     padding: 30,
+    alignItems: "center",
+    justifyContent: "center",
   },
   btnContainer: {
     backgroundColor: "white",
-    marginTop: 12,
+    marginTop: 32,
   },
   floatingButton: {
     position: "absolute",
@@ -121,14 +131,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // marginBottom:20
   },
-  containItem: {},
-  containIllustration: {},
-  containList: {},
-  titleDescript: {},
   title: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
     color: "black",
+    marginBottom: 5,
+  },
+  link: {
+    alignItems: "center",
+    marginTop: 0,
+    borderBottomWidth: 1,
+    width: 145,
+    marginLeft: 104,
+    borderBottomColor: textSecondaryColor,
   },
 });

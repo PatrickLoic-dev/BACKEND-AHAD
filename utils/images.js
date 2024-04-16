@@ -20,6 +20,7 @@ export const userIcon = require('../assets/userIcon.png');
 export const phoneIcon = require('../assets/phoneIcon.png');
 export const mailIcon = require('../assets/mailIcon.png');
 export const faceIDIcon = require('../assets/faceIDIcon.png');
+export const block = require('../assets/Block.png');
 
 export const coin = require("../assets/Coin.png");
 export const category = require("../assets/Categories.png");

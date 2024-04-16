@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View,Text, Alert,StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { illustrationInscription, listValid } from '../../utils/images';
 
-const Loarder = ({ navigation }) => {
+const Loader = ({ navigation }) => {
 <View style={styles.container}>
     <View style={styles.containIllustration}>
         <Image source={illustrationInscription}></Image>
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Loarder;
+export default Loader;

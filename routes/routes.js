@@ -11,6 +11,9 @@ import Loarder from './view/registration/loarder';
 import PinCodeInput from './view/pin_code_settings/pin_code';
 import tabNavigator from './tabNavigator';
 import Login from '../view/login/login';
+import NameScreen from '../view/registration/name_screen';
+import BirthScreen from '../view/registration/birth_screen';
+import FullInfo from '../view/registration/full_info';
 
 
 const Stack = createStackNavigator();
@@ -20,13 +23,21 @@ const routes = () => {
 
     <Stack.Navigator>
     <Stack.Screen 
-          name="Login" 
-          component={Login}
-          options={{ headerTitle: '',headerTransparent: true,}} />
+          name="Names" 
+          component={NameScreen}
+          options={{ headerShown : false}} />
     <Stack.Screen 
-          name="Home" 
-          component={tabNavigator}
-          options={{ headerTitle: '',headerTransparent: true,}} />
+          name="Birth" 
+          component={BirthScreen}
+          options={{ headerShown : false}} />
+    <Stack.Screen 
+        name="Information" 
+        component={FullInfo}
+        options={{ headerShown : false}} />
+    <Stack.Screen 
+        name="Camera" 
+        component={TakePicture}
+        options={{ headerShown : false}} />
 
     </Stack.Navigator>
   )

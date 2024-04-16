@@ -1,11 +1,25 @@
 import React, {useEffect, useState} from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Switch } from 'react-native';
-import { abstractBackgroundBlue, abstractBackgroundBlueSVG, avatar, calendar, card, chevron, faceIDIcon, investing, mailIcon, pAvatar, pencil, phoneIcon, scale, search, userIcon } from '../../utils/images';
-import { principalColor, textSecondaryColor } from '../../utils/constantes';
-import { Profile } from '../../api/userAPI';
+import { abstractBackgroundBlue, abstractBackgroundBlueSVG, avatar, block, calendar, card, chevron, faceIDIcon, investing, mailIcon, pAvatar, pencil, phoneIcon, scale, search, userIcon } from '../../utils/images';
+import { principalColor, RedColor, RPColor, textSecondaryColor } from '../../utils/constantes';
+import { logout, Profile } from '../../api/userAPI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const authToken = AsyncStorage.getItem('AuthToken');
+
+
+const handleLogout = ({navigation}) => {
+    logout()
+      .then((result) => {
+        if (result.status == 200) {
+          console.log(result.data);
+          navigation.back();
+        }
+      })
+      .catch((err) => {
+        console.error("Error" + err);
+      });
+  };
 
 const Account = () => {
 
@@ -86,6 +100,14 @@ return (
                     value={isEnabled}
                 />
             </View>
+
+            <TouchableOpacity style = {styles.item} onPress={handleLogout}>
+                <Image source={block} style = {{height :40, width : 40}}/>
+                <View>
+                    <Text style = {{fontSize  :14, fontWeight : '600', color: RedColor , marginBottom : 8}}>Deconnexion</Text>
+                    <Text style = {{fontSize  :12, fontWeight : '600', color: RPColor}}>Appuyez ici pour vous deconnecter</Text>
+                </View>
+            </TouchableOpacity>
         </View>
     </ImageBackground>
     );
