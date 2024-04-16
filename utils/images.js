@@ -21,6 +21,11 @@ export const phoneIcon = require('../assets/phoneIcon.png');
 export const mailIcon = require('../assets/mailIcon.png');
 export const faceIDIcon = require('../assets/faceIDIcon.png');
 
+export const coin = require("../assets/Coin.png");
+export const category = require("../assets/Categories.png");
+export const invoice = require("../assets/Invoice.png");
+export const exchange = require("../assets/Recurring.png");
+
 
 export const investing = require("../assets/Total investing.png");
 export const scale = require("../assets/Scale.png");

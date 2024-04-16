@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
-import { abstractBackground, avatar, calendar, card, chevron, search } from '../../utils/images';
+import { abstractBackground, avatar, calendar, card, category, chevron, coin, exchange, invoice, search } from '../../utils/images';
 import { principalColor, textSecondaryColor } from '../../utils/constantes';
 import { Profile } from '../../api/userAPI';
 
@@ -41,22 +41,23 @@ const Acceuil = () => {
 
             <View style = {styles.actions}>
                 <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn}></TouchableOpacity>
-                    <Text style = {{marginTop : 4, fontWeight : '900'}}>Dépôt</Text>
+                    <TouchableOpacity style = {styles.btn}>
+                        <Image source={exchange}/>
+                    </TouchableOpacity>
+                    <Text style = {{marginTop : 4, fontWeight : '900'}}>Recharge</Text>
                 </View>
 
                 <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn}></TouchableOpacity>
-                    <Text style = {{marginTop : 4, fontWeight : '900'}}>Retrait</Text>
-                </View>
-
-                <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn}></TouchableOpacity>
+                    <TouchableOpacity style = {styles.btn}>
+                        <Image source={invoice}/>
+                    </TouchableOpacity>
                     <Text style = {{marginTop : 4,fontWeight : '900'}}>Cotiser</Text>
                 </View>
 
                 <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn}></TouchableOpacity>
+                    <TouchableOpacity style = {styles.btn}>
+                        <Image source={category}/>
+                    </TouchableOpacity>
                     <Text style = {{marginTop : 4, fontWeight : '900'}}>More</Text>
                 </View>
             </View>
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     actions : {
         display :"flex",
         flexDirection : "row",
-        marginLeft : 20,
+        marginLeft : 60,
         marginTop :48,
         marginBottom : 48
     },
@@ -208,7 +209,9 @@ const styles = StyleSheet.create({
         backgroundColor : principalColor,
         height : 56,
         width : 56,
-        borderRadius : 50
+        borderRadius : 50,
+        alignItems :"center",
+        justifyContent : "center"
     },
     bottomSheet : {
         width : 395,
