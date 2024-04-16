@@ -5,6 +5,7 @@ export const bank = require('../assets/illustrations/bank.png');
 export const abstractBackground = require('../assets/AbstractBackground.png');
 export const abstractBackgroundBlue = require('../assets/AbstractBackgroundBlue.png');
 export const abstractBackgroundBlueSVG = require('../assets/AbstractBackgroundBlue.svg');
+export const abstractBackgroundYellow = require('../assets/AbstractBackgroundy.png');
 
 
 //Icon
@@ -14,6 +15,7 @@ export const calendar = require('../assets/Calendar.png');
 export const search = require('../assets/Search.png');
 export const avatar = require("../assets/List item element.png");
 export const arrow_right = require("../assets/Arrow_right.png");
+export const chekk = require("../assets/checkk.png");
 export const pencil = require("../assets/pencil.png");
 
 export const userIcon = require('../assets/userIcon.png');
