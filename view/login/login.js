@@ -79,7 +79,9 @@ export default function Login({ navigation }) {
             </TouchableOpacity>
           </View>
           <View>
-            <TouchableOpacity style={styles.link}>
+            <TouchableOpacity style={styles.link} onPress={() => {
+              navigation.replace("Registration");
+            }}>
               <Text style={{ color: textSecondaryColor, fontWeight: "600" }}>
                 Pas encore membre ?
               </Text>

@@ -16,7 +16,7 @@ import Input from "../../components/input";
 import { shape } from '../../utils/images';
 import { ScrollView } from 'react-native-gesture-handler';
 import InputTel from '../../components/inputTel';
-import InputPasword from '../../components/inputPassword';
+// import InputPasword from '../../components/inputPassword';
 
 const FullInfo = ({ navigation }) => {
 
@@ -35,8 +35,8 @@ const FullInfo = ({ navigation }) => {
         /><Input
           placeholder="Ville"
         />
-        <InputPasword valeur="Mot de passe"></InputPasword>
-        <InputPasword valeur="Vérification du mot de passe"></InputPasword>
+        {/* <InputPasword valeur="Mot de passe"></InputPasword>
+        <InputPasword valeur="Vérification du mot de passe"></InputPasword> */}
         <Input
           placeholder="Adresse"
         />
@@ -58,7 +58,7 @@ const FullInfo = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:principalColor,
+    backgroundColor:'#f1f1f1',
     flex: 1,
     paddingHorizontal:20
     

@@ -60,7 +60,7 @@ const NameScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:principalColor,
+    backgroundColor:"#f1f1f1",
     flex: 1,
     // padding:30,
   },

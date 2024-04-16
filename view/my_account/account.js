@@ -8,25 +8,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const authToken = AsyncStorage.getItem('AuthToken');
 
 
-const handleLogout = ({navigation}) => {
-    logout()
-      .then((result) => {
-        if (result.status == 200) {
-          console.log(result.data);
-          navigation.back();
-        }
-      })
-      .catch((err) => {
-        console.error("Error" + err);
-      });
-  };
 
-const Account = () => {
-
+const Account = ({navigation}) => {
+    
     const [isEnabled, setIsEnabled] = useState(false);
     const [user, setUser] = useState('');
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
+    
+    const handleLogout = () => {
+        logout()
+          .then((result) => {
+            if (result.status == 200) {
+              console.log(result.data);
+              navigation.replace('Login');
+            }
+          })
+          .catch((err) => {
+            console.error("Error" + err);
+          });
+      };
     useEffect(() => {
         GetProfile();
     }, []);

@@ -5,7 +5,7 @@ import CropScreen from './crop_screen';
 import { bntPicture, picture, reverse } from '../../utils/images';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function TakePicture({ navigation }) {
+export const TakePicture = ({ navigation }) => {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const cameraRef = useRef(null);

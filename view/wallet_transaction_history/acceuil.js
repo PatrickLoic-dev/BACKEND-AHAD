@@ -22,7 +22,7 @@ const Acceuil = () => {
     }
 
     return (
-        <ImageBackground   source={abstractBackground} style={styles.container}>
+        <ImageBackground  source={abstractBackground} style={styles.container}>
 
             <View style = {styles.head}>
                 <Image source={card} style = {styles.icon}></Image>
