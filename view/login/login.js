@@ -80,7 +80,7 @@ export default function Login({ navigation }) {
           </View>
           <View>
             <TouchableOpacity style={styles.link} onPress={() => {
-              navigation.replace("Registration");
+              navigation.navigate("Registration", {screen : 'Names'});
             }}>
               <Text style={{ color: textSecondaryColor, fontWeight: "600" }}>
                 Pas encore membre ?

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -13,9 +13,16 @@ import {
 } from 'react-native';
 import { principalColor } from "../../utils/constantes";
 
-const BirthScreen = ({ navigation }) => {
-    const [dateNaissance, setDateNaissance] = useState('');
-  return (
+const BirthScreen = ({ route, navigation }) => {
+  const {Nom, Prenom} = route.params;
+
+  useEffect(() => {
+    console.log(`Nom : ${Nom}`);
+    console.log(`Prenomv : ${Prenom}`);
+}, []);
+
+const [dateNaissance, setDateNaissance] = useState('');
+return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
@@ -36,7 +43,7 @@ const BirthScreen = ({ navigation }) => {
         <View style={styles.btnContainer}>
             <TouchableOpacity
                 style= {[styles.floatingButton, { opacity: dateNaissance ? 1 : 0.5 }]}
-                onPress={() => navigation.navigate('FullInfo')}
+                onPress={() => navigation.navigate('Information')}
                 disabled={!dateNaissance}>
                 <Text style={styles.floatingButtonText}>Suivant</Text>
                 </TouchableOpacity>

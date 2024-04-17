@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -18,7 +18,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 import InputTel from '../../components/inputTel';
 // import InputPasword from '../../components/inputPassword';
 
-const FullInfo = ({ navigation }) => {
+const FullInfo = ({ route, navigation }) => {
+
+  const {Nom, Prenom} = route.params;
+
+  useEffect(() => {
+    console.log(`Nom : ${Nom}`);
+    console.log(`Prenomv : ${Prenom}`);
+}, []);
 
   return (
     <KeyboardAvoidingView

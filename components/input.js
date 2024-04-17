@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {Animated, StyleSheet, Text, TextInput, View} from 'react-native';
 
-const Input = ({placeholder, onChangeText}) => {
+const Input = ({placeholder, onChangeText, ...props}) => {
   
 
   const handleTextChange = (val) => {
@@ -10,6 +10,8 @@ const Input = ({placeholder, onChangeText}) => {
   };
 
   const [text, setText] = useState('');
+  const [showPassword, setshowPassword] = useState('');
+
   const floatingLabelAnimation = useRef(
     new Animated.Value(text ? 1 : 0),
   ).current;
@@ -52,11 +54,14 @@ const Input = ({placeholder, onChangeText}) => {
         {placeholder}
       </Animated.Text>
       <TextInput
+        {...props}
         style={styles.input}
         value={text}
         onChangeText={handleTextChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        textContentType={props.secureTextEntry ? 'newPassword': props.secureTextEntry}
+        secureTextEntry ={showPassword}
       />
     </View>
   );

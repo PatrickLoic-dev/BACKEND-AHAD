@@ -46,7 +46,12 @@ const NameScreen = ({ navigation }) => {
         <View style={styles.btnContainer}>
             <TouchableOpacity
               style= {[styles.floatingButton, { opacity: (nom && prenom) ? 1 : 0.5 }]}
-              onPress={() => navigation.navigate('BirthScreen')}
+              onPress={() => {
+                navigation.navigate('Information', {
+                  Nom : nom,
+                  Prenom : prenom
+                })
+              }}
               // disabled={nom.length === 0 || prenom.length === 0}
               >
     <Text style={styles.floatingButtonText}>Suivant</Text>

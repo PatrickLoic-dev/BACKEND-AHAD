@@ -21,10 +21,6 @@ const RegistrationStack = () => {
           component={NameScreen}
           options={{ headerShown : false}} />
     <Stack.Screen 
-          name="Birth" 
-          component={BirthScreen}
-          options={{ headerShown : false}} />
-    <Stack.Screen 
         name="Information" 
         component={FullInfo}
         options={{ headerShown : false}} />
