@@ -10,11 +10,14 @@ import {
   TouchableWithoutFeedback,
   Button,
   Keyboard,
+  ImageBackground
 } from 'react-native';
 import { principalColor } from "../../utils/constantes";
 import Input from "../../components/input";
 import { shape } from '../../utils/images';
-import BirthScreen from './birth_screen';
+import { abstractBackgroundColor } from "../../utils/images";
+
+
 
 const NameScreen = ({ navigation }) => {
   
@@ -22,6 +25,8 @@ const NameScreen = ({ navigation }) => {
   const [prenom, setPrenom] = useState('');
 
   return (
+    
+    <ImageBackground source={abstractBackgroundColor}  style={styles.container}>
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
@@ -37,11 +42,12 @@ const NameScreen = ({ navigation }) => {
           value={nom}
           onChangeText={text => setNom(text)}
         />
-          <Input
+        <Input
           placeholder="Prénom"
           value={prenom}
           onChangeText={text => setPrenom(text)}
         />
+
         </View>
         <View style={styles.btnContainer}>
             <TouchableOpacity
@@ -60,14 +66,15 @@ const NameScreen = ({ navigation }) => {
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:"#f1f1f1",
     flex: 1,
-    // padding:30,
+    alignItems: "center",
+    justifyContent: "center",
   },
   title:{
     // marginTop:10,
@@ -91,7 +98,7 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   floatingButton: {
-    position: 'absolute',
+        position: 'absolute',
         bottom: '-145%',
         right: 5,
         backgroundColor: '#000',
@@ -100,6 +107,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 114,
         justifyContent:'center',
         display:'flex',
+        width : '100%',
         flexDirection:'row',
         alignItems:'center',
   },
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
   inner: {
     padding: 24,
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
   },
   header: {
     fontSize: 36,
@@ -122,10 +130,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderBottomWidth: 1,
     marginBottom: 36,
-  },
-  btnContainer: {
-    backgroundColor: 'white',
-    marginTop: 12,
   },
   inner: {
     padding: 24,

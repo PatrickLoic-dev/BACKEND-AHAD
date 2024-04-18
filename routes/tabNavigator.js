@@ -5,6 +5,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Acceuil from '../view/wallet_transaction_history/acceuil';
 import Rubrique from '../view/rubriques/rubrique';
 import Account from '../view/my_account/account';
+import PayementStack from './payemantStack';
+
 
 
 
@@ -20,7 +22,7 @@ return(
     }}>
     <Tab.Screen
         name='Portefeuille'
-        component={Acceuil}
+        component={PayementStack}
         options={{
             tabBarLabel: 'Portefeuille',
             tabBarIcon: ({ color, size, borderColor }) => (

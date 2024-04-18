@@ -19,6 +19,22 @@ export const login = async data => {
     }
 }
 
+export const registration = async data => {
+    try {
+        const result = await apiManager	("/users", {
+            method : "POST",
+            headers : {
+                'Accept': 'application/json',
+                'Content-Type' : "multipart/form-data",
+            },
+            data : data
+        })
+        return result;
+    } catch (error) {
+        return error.response.data
+    }
+}
+
 export const Profile = async data => {
     try {
         const result = await axios.get('https://backend-ahad-production.up.railway.app/api/v1/users/me', {

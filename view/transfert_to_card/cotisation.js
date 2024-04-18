@@ -10,11 +10,12 @@ import {
   KeyboardAvoidingView,
   ImageBackground,
 } from "react-native";
+import Dropdown from "../../components/dropdown";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { abstractBackgroundColor } from "../../utils/images";
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Transfert = () => {
+const Cotisation = () => {
   const [selectedValue, setSelectedValue] = useState("");
   return (
     <ImageBackground source={abstractBackgroundColor} style={styles.container}>
@@ -32,7 +33,7 @@ const Transfert = () => {
         </TextInput>
         <Text style={styles.secondAmount}>.00</Text>
       </View>
-      
+      <Dropdown></Dropdown>
       <View style={styles.btnContainer}>
         <TouchableOpacity
           style={styles.floatingButton}
@@ -83,13 +84,20 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   floatingButton: {
-    justifyContent : "center",
+    position: "absolute",
+    bottom: 200,
+    right: "10%",
     backgroundColor: "black",
     borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 100,
     display: "flex",
     flexDirection: "row",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 3,
   },
   floatingButtonText: {
     color: "white",
@@ -98,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Transfert;
+export default Cotisation;

@@ -4,7 +4,7 @@ import { abstractBackground, avatar, calendar, card, category, chevron, coin, ex
 import { principalColor, textSecondaryColor } from '../../utils/constantes';
 import { Profile } from '../../api/userAPI';
 
-const Acceuil = () => {
+const Acceuil = ({navigation}) => {
 
     const [user, setUser] = useState('');
 
@@ -41,14 +41,14 @@ const Acceuil = () => {
 
             <View style = {styles.actions}>
                 <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn}>
+                    <TouchableOpacity style = {styles.btn} onPress={()=> navigation.navigate('Recharge')}>
                         <Image source={exchange}/>
                     </TouchableOpacity>
                     <Text style = {{marginTop : 4, fontWeight : '900'}}>Recharge</Text>
                 </View>
 
                 <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn}>
+                    <TouchableOpacity style = {styles.btn} onPress={()=> navigation.navigate('Cotisation')}>
                         <Image source={invoice}/>
                     </TouchableOpacity>
                     <Text style = {{marginTop : 4,fontWeight : '900'}}>Cotiser</Text>

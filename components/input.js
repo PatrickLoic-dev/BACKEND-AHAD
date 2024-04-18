@@ -1,5 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {Animated, StyleSheet, Text, TextInput, View} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const Input = ({placeholder, onChangeText, ...props}) => {
   
@@ -10,7 +12,7 @@ const Input = ({placeholder, onChangeText, ...props}) => {
   };
 
   const [text, setText] = useState('');
-  const [showPassword, setshowPassword] = useState('');
+  const [showPassword, setshowPassword] = useState(props.secureTextEntry);
 
   const floatingLabelAnimation = useRef(
     new Animated.Value(text ? 1 : 0),
@@ -63,18 +65,27 @@ const Input = ({placeholder, onChangeText, ...props}) => {
         textContentType={props.secureTextEntry ? 'newPassword': props.secureTextEntry}
         secureTextEntry ={showPassword}
       />
+      {props.secureTextEntry && !!text && (
+        <TouchableOpacity style = {{width : 24, borderColor: '#000', borderBottomWidth : 1, paddingTop : 15.35}} onPress= {() => setshowPassword(!showPassword)}>
+            {!showPassword ? <Icon name = "eye-outline" color = {'gray'} size = {24}/> : <Icon name = "eye-off-outline" color = {'gray'} size = {24}/>}
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  
+  container :  {
+    flexDirection : "row",
+    justifyContent: "space-between",
+  },
   input: {
     borderBottomWidth: 1,
     borderColor: '#000',
     padding: 10,
     fontSize: 16,
     marginBottom:45,
+    width: '95%',
     // fontWeight: 'bold',
   },
   label: {
