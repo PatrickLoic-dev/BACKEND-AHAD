@@ -34,6 +34,7 @@ export const exchange = require("../assets/Recurring.png");
 
 export const investing = require("../assets/Total investing.png");
 export const scale = require("../assets/Scale.png");
+export const account = require('../assets/Account.png');    
 
 export const illustrationInscription = require("../assets/Illustration.png");
 export const listLoard = require("../assets/listLoard.png");

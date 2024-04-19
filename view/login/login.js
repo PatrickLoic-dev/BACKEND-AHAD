@@ -42,7 +42,11 @@ export default function Login({ navigation }) {
           console.log(result.data);
           AsyncStorage.setItem("AuthToken", result.data.authToken);
 
-          navigation.replace("Home");
+          if (result.data.user.estValide == false) {
+            navigation.replace("Validation");
+          }else{
+            navigation.replace("Home");
+          }
         }
       })
       .catch((err) => {

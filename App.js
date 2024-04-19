@@ -13,6 +13,7 @@ import Account from './view/my_account/account';
 import Login from './view/login/login';
 import BottomtabNavigator from './routes/tabNavigator';
 import RegistrationStack from './routes/RegistrationStack';
+import ValidationStack from './routes/validationStack';
 
 
 
@@ -31,6 +32,10 @@ export default function App() {
     <Stack.Screen 
           name="Home" 
           component={BottomtabNavigator}
+          options={{ headerTitle: '',headerTransparent: true,}} />
+    <Stack.Screen 
+          name="Validation" 
+          component={ValidationStack}
           options={{ headerTitle: '',headerTransparent: true,}} />
     <Stack.Screen 
           name="Registration" 
