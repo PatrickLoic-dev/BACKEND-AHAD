@@ -72,8 +72,6 @@ userSchema.methods.toJSON = function() {
 
     delete user.password;
     delete user.authTokens; 
-    delete user.estAdmin; 
-
 
     return user;
 }
