@@ -193,8 +193,18 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
 
 .post('/users/add-rubriques', authentification, async (req, res) => {
     try {
-        const rubrique = new Rubrique(req.body);
-        req.user.rubriques.push( rubrique );
+        // Assurez-vous que le corps de la requête contient un tableau d'objets de rubriques
+        const rubriquesToAdd = req.body;
+
+        // Itérer sur chaque objet de rubrique dans le tableau
+        for (const rubriqueData of rubriquesToAdd) {
+            // Créer une nouvelle instance de Rubrique avec les données de l'objet
+            const rubrique = new Rubrique(rubriqueData);
+            // Ajouter la rubrique à la liste des rubriques de l'utilisateur
+            req.user.rubriques.push(rubrique);
+        }
+
+        // Enregistrer les modifications de l'utilisateur dans la base de données
         await req.user.save();
         res.send("Rubrique(s) ajouté");
     } catch (error) {
