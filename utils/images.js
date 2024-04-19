@@ -39,6 +39,7 @@ export const illustrationInscription = require("../assets/Illustration.png");
 export const listLoard = require("../assets/listLoard.png");
 export const listValid = require("../assets/listValid.png");
 export const avatarImage = require("../assets/Avatar Frame.png");
+export const finishedBackground = require("../assets/Finished.png");
 
 export const bntPicture = require("../assets/photo_button.png");
 export const picture = require("../assets/picture.png");

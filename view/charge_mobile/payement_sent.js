@@ -1,126 +1,146 @@
-import React from 'react';
-import { View, StyleSheet, ImageBackground, Image, Text, TouchableOpacity } from 'react-native';
-import { abstractBackgroundBlue, abstractBackgroundYellow, chekk } from '../../utils/images';
+import React, { useEffect } from "react";
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import {
+  abstractBackgroundBlue,
+  abstractBackgroundYellow,
+  chekk,
+  finishedBackground,
+} from "../../utils/images";
+import Icon from 'react-native-vector-icons/Ionicons';
+import { updateUser } from "../../api/userAPI";
 
-const PayementSent = () => {
+const PayementSent = ({route, navigation}) => {
+  const {Montant, Solde} = route.params;
+
+  const montantNumber = parseFloat(Montant);
+  const soldeNumber = parseFloat(Solde);
+  const Newsolde = montantNumber + soldeNumber;
+
+  useEffect(() => {
+    console.log(`Montant : ${Montant}`);
+    console.log(`Solde : ${Solde}`);
+    console.log(`Solde + Montant : ${montantNumber + soldeNumber}`);
+  }, []);
+
+
+  const handleUpdateSolde = () => { 
+    updateUser({
+      solde : `${Newsolde}`
+    }).then((result) => {
+      if (result.status == 200) {
+        console.log(result.data);
+        navigation.replace("Acceuil");
+      }
+    }).catch((err) => {
+      console.error("Error" + err);
+    });
+  }
+
   return (
-    <ImageBackground style={styles.container}  source={abstractBackgroundYellow} >
+    <ImageBackground style={styles.container} source={abstractBackgroundYellow}>
+            <View style ={styles.header}>
+             <TouchableOpacity onPress={() => navigation.replace('Acceuil')}><Icon name = "arrow-back-outline" color = {'black'} size = {32}/></TouchableOpacity>
+            </View>
 
-      <View style={styles.card}>
-        <Image source={chekk} style={styles.check}></Image>
-        <View style={styles.rondG}></View>
-        <View style={styles.rondD}></View>
-        <Text style={styles.title}>Transfert effectué</Text>
+      <ImageBackground source={finishedBackground} style= {styles.done}>
+      <Text style={styles.title}>Recharge effectué</Text>
 
         <View style={styles.containAmount}>
-        <Text  style={styles.device}>XAF</Text>
-        <Text style={styles.amount} keyboardType="numeric">20</Text>
-        <Text style={styles.amountt}>.00</Text>
-      </View>
+          <Text style={styles.device}>XAF</Text>
+          <Text style={styles.amount} keyboardType="numeric">
+            {Montant}
+          </Text>
+          <Text style={styles.amountt}>.00</Text>
+        </View>
 
-      <View style={styles.btnContainer}>
-            <TouchableOpacity
-    style={styles.floatingButton}
-    onPress={() => navigation.navigate('')}
-  >
-    <Text style={styles.floatingButtonText}>Terminé !</Text>
-  </TouchableOpacity>
-          </View>
-
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+            style={styles.floatingButton}
+            onPress={handleUpdateSolde}
+          >
+            <Text style={styles.floatingButtonText}>Terminé !</Text>
+          </TouchableOpacity>
       </View>
-      <TouchableOpacity>
-      <Text style={styles.textview}>Voir la transaction</Text>
-      </TouchableOpacity>
+      </ImageBackground>
+    
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    alignItems:'center'
+  container: {
+    width : "100%",
+    height : "100%",
+    // alignItems: "center",
+    // justifyContent : "center"
   },
-  card: {
-    position:'relative',
-    width:300,
-    backgroundColor:'white',
-    borderRadius: 30,
-    height:400,
-    marginTop:120,
+  header : {
+    marginTop : 56,
+    marginLeft : 25,
+    flexDirection : 'row'
   },
-  check:{
-    top:-30,
-    left:115
+  title: {
+    fontSize: 24,
+    fontWeight: "900",
+    marginTop : 84,
+    marginRight : 25,
+    marginBottom : 96
   },
-  rondG:{
-    width:50,
-    height:50,
-    backgroundColor:'#EAEEFF',
-    borderRadius:50,
-    left:-30,
-    top:50
+  containAmount: {
+    alignItems: "baseline",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginRight : 25,
+    marginBottom : 96,
   },
-  rondD:{
-    width:50,
-    height:50,
-    backgroundColor:'#EAEEFF',
-    borderRadius:50,
-    right:-281,
-    top:-2
+  device: {
+    fontSize: 24,
+    fontWeight : '900'
   },
-  title:{
-    fontSize:27,
-    fontWeight:'bold',
-    top:-100,
-    left:35
+  done: {
+    marginTop: 90,
+    width: "95%",
+    height: "76%",
+    marginLeft: 20,
+    alignItems: "center",
   },
-  containAmount:{
-    top:-20,
-    height:60,
-    alignItems:'center',
-    flexDirection:'row',
-    justifyContent:'center'
+  amount: {
+    fontSize: 56,
+    marginHorizontal: 5,
+    fontWeight : '900'
   },
-  device:{
-    fontSize:24
-  },
-  amount:{
-    fontSize:56,
-    top:-13,
-    marginHorizontal:5
-  },
-  amountt:{
-    fontSize:24
+  amountt: {
+    fontSize: 24,
   },
   btnContainer: {
-    backgroundColor: 'white',
-    alignContent:'center'
+    alignItems: "center",
   },
   floatingButton: {
-    bottom: -40,
-    right: '0%',
-    backgroundColor: 'black',
+    right: 5,
+    backgroundColor: "black",
     borderRadius: 30,
     paddingVertical: 10,
     marginHorizontal: 50,
-    paddingHorizontal:60,
-    display:'flex',
-    flexDirection:'row',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 3,
+    paddingHorizontal: 60,
+    display: "flex",
+    flexDirection: "row",
   },
   floatingButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-  textview:{
-    marginTop:150,
-    fontSize:16
-  }
+  textview: {
+    fontSize: 14,
+    fontWeight : '900'
+  },
 });
 
 export default PayementSent;

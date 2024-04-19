@@ -19,7 +19,7 @@ export const login = async data => {
     }
 }
 
-export const registration = async data => {
+export const registration = async data  => {
     try {
         const result = await apiManager	("/users", {
             method : "POST",
@@ -28,6 +28,23 @@ export const registration = async data => {
                 'Content-Type' : "multipart/form-data",
             },
             data : data
+        })
+        return result;
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const updateUser = async data => {
+    try {
+        const result = await apiManager	("/users/me", {
+            method : "PATCH",
+            headers : {
+                'Content-Type' : "application/json",
+                'Authorization': `Bearer ${authToken._j}`
+            },
+            data : data
+        
         })
         return result;
     } catch (error) {

@@ -36,17 +36,16 @@ const handleRegistration = () => {
   const formdata = new FormData();
   formdata.append('avatar', {
     uri: image,
-    type: 'image/jpeg',
-    name: new Date(),
+    name: 'profile-image',
   });
 
-  registration({
-    name : Nom,
-    surname :Prenom,
-    telephone: Telephone,
-    email: Email,
-    password: Password,
-  }, formdata)
+  formdata.append('name', Nom);
+  formdata.append('surname', Prenom);
+  formdata.append('telephone', Telephone);
+  formdata.append('email', Email);
+  formdata.append('password', Password);
+
+  registration(formdata)
     .then((result) => {
       if (result.status == 200) {
         console.log(result.data);
@@ -90,7 +89,7 @@ const handleRegistration = () => {
         <Text style={styles.subtitle}>Veuillez choisir une image de vous</Text>
         </View>
         <View style = {styles.cameraBtn}>
-          
+          <Icon name = "camera-outline" color = {'white'} size = {32}/>
         </View>
         <TouchableOpacity style = {styles.avatar} onPress={pickImage}>
           <Avatar.Image size={200} source={{uri : image==""? avatarImage : image}}/>

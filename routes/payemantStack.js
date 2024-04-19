@@ -25,7 +25,7 @@ const PayementStack = () => {
     
 
         <Stack.Screen 
-            name="Compete" 
+            name="Complete" 
             component={PayementSent} />
         </Stack.Navigator>
     )

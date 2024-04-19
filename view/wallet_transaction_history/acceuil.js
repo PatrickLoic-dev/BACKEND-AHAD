@@ -41,14 +41,18 @@ const Acceuil = ({navigation}) => {
 
             <View style = {styles.actions}>
                 <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn} onPress={()=> navigation.navigate('Recharge')}>
+                    <TouchableOpacity style = {styles.btn} onPress={()=> navigation.replace('Recharge', {
+                        email : user.email,
+                        phone : user.telephone,
+                        solde: user.solde
+                    })}>
                         <Image source={exchange}/>
                     </TouchableOpacity>
                     <Text style = {{marginTop : 4, fontWeight : '900'}}>Recharge</Text>
                 </View>
 
                 <View style = {styles.button}>
-                    <TouchableOpacity style = {styles.btn} onPress={()=> navigation.navigate('Cotisation')}>
+                    <TouchableOpacity style = {styles.btn} onPress={()=> navigation.replace('Cotisation')}>
                         <Image source={invoice}/>
                     </TouchableOpacity>
                     <Text style = {{marginTop : 4,fontWeight : '900'}}>Cotiser</Text>
@@ -58,7 +62,7 @@ const Acceuil = ({navigation}) => {
                     <TouchableOpacity style = {styles.btn}>
                         <Image source={category}/>
                     </TouchableOpacity>
-                    <Text style = {{marginTop : 4, fontWeight : '900'}}>More</Text>
+                    <Text style = {{marginTop : 4, fontWeight : '900'}}>Plus</Text>
                 </View>
             </View>
 
