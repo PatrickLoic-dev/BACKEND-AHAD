@@ -230,7 +230,7 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
 
 .post('/cotisation/Init', authentification, async(req, res) => {
      const user = req.user;
-    const rubriqueId = await Rubrique.findOne(req.rubrique)
+    const rubriqueId = await Rubrique.findOne(req.body.rubrique)
 
     const cotisation = new Cotisation(
         userId = user._id,
