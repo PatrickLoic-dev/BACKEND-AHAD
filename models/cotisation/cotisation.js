@@ -4,7 +4,6 @@ const cotisationSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
     },
     montant: {
         type: Number,
@@ -13,7 +12,6 @@ const cotisationSchema = new mongoose.Schema({
     rubrique : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Rubrique',
-        required: true
     }
 
 }, { timestamps: true });
