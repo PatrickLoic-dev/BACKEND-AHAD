@@ -91,11 +91,11 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
 
 //Modification des données d'un utilisateur
 .patch('/users/me', authentification, upload.single('avatar'), async (req, res, next) => {
+    const updatedInfo = Object.keys(req.body);
      if(req.file) 
      {
-        user.avatar = req.file.path;
+        updatedInfo.avatar = req.file.path;
       }
-    const updatedInfo = Object.keys(req.body);
 
 
     try {
