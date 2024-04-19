@@ -16,8 +16,17 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { confirmPayement, initializePayement } from "../../api/depositAPI";
 import { notchApiManager } from "../../api/notchApiManager";
 import { updateUser } from "../../api/userAPI";
+import { Button, Dialog, Portal, PaperProvider } from 'react-native-paper';
 
 const Transfert = ({route, navigation}) => {
+
+  const [visible, setVisible] = React.useState(false);
+
+  const showDialog = () => setVisible(true);
+
+  const hideDialog = () => setVisible(false);
+
+
 
   const {email, phone, solde} = route.params;
 

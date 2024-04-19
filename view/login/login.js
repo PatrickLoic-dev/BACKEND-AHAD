@@ -45,8 +45,13 @@ export default function Login({ navigation }) {
           if (result.data.user.estValide == false) {
             navigation.replace("Validation");
           }else{
-            navigation.replace("Home");
+            if(result.data.user.estAdmin == true){
+              navigation.replace("Admin");
+            }else{
+              navigation.replace("Home");
+            }
           }
+          
         }
       })
       .catch((err) => {

@@ -8,11 +8,13 @@ export const abstractBackgroundBlue = require('../assets/AbstractBackgroundBlue.
 export const abstractBackgroundBlueSVG = require('../assets/AbstractBackgroundBlue.svg');
 export const abstractBackgroundYellow = require('../assets/AbstractBackgroundy.png');
 export const abstractBackgroundColor = require('../assets/AbstractBackgroundColor.png');
+export const abstractBackgroundWhite = require('../assets/AbstractBackgroundWhite.png');
 
 
 //Icon
 export const card = require('../assets/Card.png');
 export const chevron = require('../assets/Chevron.png');
+export const chevonRight = require('../assets/ChevronRight.png');
 export const calendar = require('../assets/Calendar.png');
 export const search = require('../assets/Search.png');
 export const avatar = require("../assets/List item element.png");
