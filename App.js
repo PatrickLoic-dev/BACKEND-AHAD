@@ -13,6 +13,8 @@ import Account from './view/my_account/account';
 import Login from './view/login/login';
 import BottomtabNavigator from './routes/tabNavigator';
 import RegistrationStack from './routes/RegistrationStack';
+import ValidationStack from './routes/validationStack';
+import AdminTabNavigator from './routes/AdminStack';
 
 
 
@@ -32,6 +34,14 @@ export default function App() {
           name="Home" 
           component={BottomtabNavigator}
           options={{ headerTitle: '',headerTransparent: true,}} />
+    <Stack.Screen 
+          name="Validation" 
+          component={ValidationStack}
+          options={{ headerTitle: '',headerTransparent: true,}} />
+    <Stack.Screen 
+          name="Admin" 
+          component={AdminTabNavigator}
+          options={{ headerTitle: '',headerTransparent: true,}} />          
     <Stack.Screen 
           name="Registration" 
           component={RegistrationStack}

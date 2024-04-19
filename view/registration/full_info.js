@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -10,7 +10,9 @@ import {
   TouchableWithoutFeedback,
   Button,
   Keyboard,
+  ImageBackground
 } from 'react-native';
+import { abstractBackgroundColor } from "../../utils/images";
 import { principalColor } from "../../utils/constantes";
 import Input from "../../components/input";
 import { shape } from '../../utils/images';
@@ -18,9 +20,40 @@ import { ScrollView } from 'react-native-gesture-handler';
 import InputTel from '../../components/inputTel';
 // import InputPasword from '../../components/inputPassword';
 
-const FullInfo = ({ navigation }) => {
+const FullInfo = ({ route, navigation }) => {
+
+  const {Nom, Prenom} = route.params;
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setconfirmPassword] = useState('');
+
+  const [tel, setTelephone] = useState('');
+    const phoneNumber = tel.replace(/\s/g, '');
+  const CheckPassword = () => { 
+    if(password != confirmPassword){
+      console.log("Les mots de passe ne correspondent pas");
+    }else{
+      navigation.navigate('Avatar', {
+        Nom : Nom,
+        Prenom : Prenom,
+        Email : email,
+        Telephone : phoneNumber,
+        Password : password,
+      });
+    }
+  }
+
+
+
+  useEffect(() => {
+    console.log(`Nom : ${Nom}`);
+    console.log(`Prenom : ${Prenom}`);
+}, []);
 
   return (
+    <ImageBackground source={abstractBackgroundColor} style = {styles.container}>
+
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
@@ -32,20 +65,27 @@ const FullInfo = ({ navigation }) => {
         <View style={styles.form}>
         <Input
           placeholder="Email"
-        /><Input
-          placeholder="Ville"
+          onChangeText={text => setEmail(text)}
         />
-        {/* <InputPasword valeur="Mot de passe"></InputPasword>
-        <InputPasword valeur="Vérification du mot de passe"></InputPasword> */}
+
         <Input
-          placeholder="Adresse"
+          placeholder="Mot de passe"
+          onChangeText={text => setPassword(text)}
+          secureTextEntry
         />
-        <InputTel/>
+        <Input
+          placeholder="Confimer le mot de passe"
+          onChangeText={text => setconfirmPassword(text)}
+          secureTextEntry
+        />
+        <InputTel
+         onChangeText={text => setTelephone(text)}
+        />
         </View>
         <View style={styles.btnContainer}>
             <TouchableOpacity
     style={styles.floatingButton}
-    onPress={() => navigation.navigate('FullInfo')}
+    onPress={CheckPassword}
   >
     <Text style={styles.floatingButtonText}>Suivant</Text>
   </TouchableOpacity>
@@ -53,15 +93,15 @@ const FullInfo = ({ navigation }) => {
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:'#f1f1f1',
     flex: 1,
-    paddingHorizontal:20
-    
+    alignItems: "center",
+    justifyContent: "center",
   },
   title:{
     // marginTop:10,
@@ -101,6 +141,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 114,
     justifyContent:'center',
     display:'flex',
+    width : '100%',
     flexDirection:'row',
     alignItems:'center',
   },
@@ -113,7 +154,7 @@ const styles = StyleSheet.create({
   inner: {
     padding: 24,
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
   },
   header: {
     fontSize: 36,

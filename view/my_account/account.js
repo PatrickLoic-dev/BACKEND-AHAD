@@ -43,7 +43,7 @@ const Account = ({navigation}) => {
 return (
     <ImageBackground  source={abstractBackgroundBlue} style={styles.container}>
         <Text style = {styles.head}>My account</Text>
-        <Image source={pAvatar} style = {styles.avatar}/>
+        <Image source={{uri : `https://backend-ahad-production.up.railway.app/uploads//1712714150194.png`}} style = {styles.avatar}/>
         <TouchableOpacity style = {{backgroundColor : '#FFF', padding : 20, borderRadius : 50, height : 40, width :40, justifyContent : 'center', alignItems : 'center', position :'absolute', zIndex :100, top : 154, right : 137}}>
             <Image source={pencil}/>
         </TouchableOpacity>
@@ -72,7 +72,7 @@ return (
                 <Image source={phoneIcon}/>
                 <View>
                     <Text style = {{fontSize  :12, fontWeight : '600', color: textSecondaryColor, marginBottom : 8}}>Numéro</Text>
-                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor}}>+237{user.telephone}</Text>
+                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor}}>+{user.telephone}</Text>
                 </View>
             </View>
 

@@ -10,13 +10,15 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Platform,
+  ImageBackground
 } from "react-native";
-import { illustrationInscription } from "../../utils/images";
+import { abstractBackgroundColor, illustrationInscription } from "../../utils/images";
 import Input from "../../components/input";
 import { login } from "../../api/userAPI";
 import { parseJsonConfigFileContent } from "typescript";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { textSecondaryColor } from "../../utils/constantes";
+import { StatusBar } from "expo-status-bar";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -40,7 +42,16 @@ export default function Login({ navigation }) {
           console.log(result.data);
           AsyncStorage.setItem("AuthToken", result.data.authToken);
 
-          navigation.replace("Home");
+          if (result.data.user.estValide == false) {
+            navigation.replace("Validation");
+          }else{
+            if(result.data.user.estAdmin == true){
+              navigation.replace("Admin");
+            }else{
+              navigation.replace("Home");
+            }
+          }
+          
         }
       })
       .catch((err) => {
@@ -49,10 +60,12 @@ export default function Login({ navigation }) {
   };
 
   return (
+    <ImageBackground source={abstractBackgroundColor} style={styles.container}>
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
+      <StatusBar style="auto" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
           <View style={styles.containIllustration}>
@@ -63,10 +76,14 @@ export default function Login({ navigation }) {
           </View>
 
           <View>
-            <Input placeholder="Email" onChangeText={handleEmailChange} />
+            <Input 
+            placeholder="Email" 
+            onChangeText={handleEmailChange} />
+
             <Input
               placeholder="Mot de passe"
               onChangeText={handlePasswordChange}
+              secureTextEntry
             />
           </View>
 
@@ -80,7 +97,7 @@ export default function Login({ navigation }) {
           </View>
           <View>
             <TouchableOpacity style={styles.link} onPress={() => {
-              navigation.replace("Registration");
+              navigation.navigate("Registration", {screen : 'Names'});
             }}>
               <Text style={{ color: textSecondaryColor, fontWeight: "600" }}>
                 Pas encore membre ?
@@ -90,12 +107,12 @@ export default function Login({ navigation }) {
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
     flex: 1,
     padding: 30,
     alignItems: "center",
@@ -103,7 +120,7 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     backgroundColor: "white",
-    marginTop: 32,
+    marginTop: 64,
   },
   floatingButton: {
     position: "absolute",
@@ -127,11 +144,11 @@ const styles = StyleSheet.create({
   inner: {
     padding: 0,
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "flex-start",
   },
   containTitle: {
     alignItems: "center",
-    // marginBottom:20
+    marginBottom:20
   },
   title: {
     fontSize: 24,
@@ -146,6 +163,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: 145,
     marginLeft: 104,
+    marginTop : 16,
     borderBottomColor: textSecondaryColor,
   },
 });

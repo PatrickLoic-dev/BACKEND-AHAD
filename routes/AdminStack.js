@@ -1,3 +1,4 @@
+
 import { View, Text } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -6,17 +7,19 @@ import Acceuil from '../view/wallet_transaction_history/acceuil';
 import Rubrique from '../view/rubriques/rubrique';
 import Account from '../view/my_account/account';
 import PayementStack from './payemantStack';
+import demandeUser from '../view/users/demandeUser';
+import DemandeUser from '../view/users/demandeUser';
 
 
 
 
-export default function BottomtabNavigator()  {
+export default function AdminTabNavigator()  {
 
     const Tab = createBottomTabNavigator();
 
 return(
     <Tab.Navigator
-    initialRouteName='Acceuil'
+    initialRouteName='Portefeuille'
     screenOptions={{
         tabBarActiveTintColor: '#FDFF96',
     }}>
@@ -37,6 +40,19 @@ return(
         component={Rubrique}
         options={{
             tabBarLabel: 'Rubrique',
+            tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="bell" color={color} size={size} />
+            ),
+            tabBarLabelStyle : {color: '#000'},
+            headerShown : false
+        }}
+    />
+
+<Tab.Screen
+        name='Users'
+        component={DemandeUser}
+        options={{
+            tabBarLabel: 'Utilisateurs',
             tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="bell" color={color} size={size} />
             ),

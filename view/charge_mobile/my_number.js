@@ -1,75 +1,173 @@
-import React, {useState} from 'react';
-import {Platform,Keyboard, View,Text, StyleSheet,TouchableOpacity, TextInput, KeyboardAvoidingView  } from 'react-native';
-import Dropdown from './dopdown';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import React, { useState, useEffect } from "react";
+import {
+  Platform,
+  Keyboard,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
+  ImageBackground,
+} from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { abstractBackgroundColor } from "../../utils/images";
+import Icon from 'react-native-vector-icons/Ionicons';
+import { confirmPayement, initializePayement } from "../../api/depositAPI";
+import { notchApiManager } from "../../api/notchApiManager";
+import { updateUser } from "../../api/userAPI";
+import { Button, Dialog, Portal, PaperProvider } from 'react-native-paper';
 
-const Transfert = () => {
-    const [selectedValue, setSelectedValue] = useState('');
+const Transfert = ({route, navigation}) => {
+
+  const [visible, setVisible] = React.useState(false);
+
+  const showDialog = () => setVisible(true);
+
+  const hideDialog = () => setVisible(false);
+
+
+
+  const {email, phone, solde} = route.params;
+
+
+  const [amount, setAmount] = useState('');
+
+
+  useEffect(() => {
+    console.log(`Email : ${email}`);
+    console.log(`Telephone : ${phone}`);
+    console.log(`Solde : ${solde}`);
+  }, []);
+
+  // Function to handle text input change
+  const handleInputChange = (value) => {
+    setAmount(value);
+    console.log(amount) // Update the amount state with the new value
+  };
+
+  const handlePayement = () => {
+    initializePayement({
+      email: email,
+      currency: 'XAF',
+      amount : amount,
+      phone : `+${phone}`,
+      reference : '',
+      description: "Depot sur le compte Coinbase",
+    }).then((result) => {
+        if (result.status == 201) {
+          console.log(result.data);
+          console.log(result.data.transaction.reference);
+          
+          confirmPayement({
+            channel : "cm.mobile",
+            data : {
+              phone : `+${phone}`,
+            }
+          },result.data.transaction.reference).then((result) => {
+            if (result.status == 202) {
+              console.log(result.data);
+              console.log("Transaction effectué avec succès");
+              navigation.navigate("Complete", {Montant : amount, Solde : solde})
+            }
+          }).catch((err) => {
+            console.error("Error" + err);
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error" + err);
+      });
+  };
+  const [selectedValue, setSelectedValue] = useState("");
   return (
-    <View style={styles.container}>
-      <View style={styles.containAmount}>
-        <Text  style={styles.device}>XAF</Text>
-        <TextInput style={styles.amount} keyboardType="numeric">20</TextInput>
-        <Text style={styles.amountt}>.00</Text>
+    <ImageBackground source={abstractBackgroundColor} style={styles.container}>
+      <View style ={styles.header}>
+      <TouchableOpacity onPress={() => navigation.replace('Acceuil')}><Icon name = "arrow-back-outline" color = {'black'} size = {32}/></TouchableOpacity>
+        <View style = {{marginLeft : 20}}>
+          <Text style={styles.title}>Depot</Text>
+          <Text style={styles.subtitle}>+237698800797</Text>
+        </View>
       </View>
-      <Dropdown></Dropdown>
+
+      <View style={styles.containAmount}>
+        <Text style={styles.device}>XAF</Text>
+        <TextInput 
+          placeholder="2000" 
+          style={styles.amount} 
+          keyboardType="numeric"
+          onChangeText={handleInputChange} 
+          value={amount}
+          >
+        </TextInput>
+        <Text style={styles.secondAmount}>.00</Text>
+      </View>
+      
       <View style={styles.btnContainer}>
         <TouchableOpacity
-            style={styles.floatingButton}
-            onPress={() => navigation.navigate('')}
+          style={styles.floatingButton}
+          onPress={handlePayement}
         >
-            <Text style={styles.floatingButtonText}>Confirmer</Text>
+          <Text style={styles.floatingButtonText}>Confirmer</Text>
         </TouchableOpacity>
-       </View>
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding:25
+    padding: 25,
   },
-  containAmount:{
-    height:300,
-    alignItems:'center',
-    flexDirection:'row',
-    justifyContent:'center'
+  containAmount: {
+    height: 300,
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
   },
-  device:{
-    fontSize:24
+  header : {
+    marginTop : 32,
+    flexDirection : 'row'
   },
-  amount:{
-    fontSize:56,
-    paddingBottom:20,
-    marginHorizontal:5
+  title : {
+    fontSize: 14,
+    fontWeight : '900'
   },
-  amountt:{
-    fontSize:24
+  subtitle: {
+    fontSize: 12,
+    color: "grey",
+  },
+  device: {
+    fontSize: 24,
+    fontWeight : '900'
+  },
+  amount: {
+    fontSize: 56,
+    paddingBottom: 20,
+    marginHorizontal: 5,
+    fontWeight : '900'
+  },
+  secondAmount: {
+    fontSize: 24,
+    fontWeight : '900'
   },
   btnContainer: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   floatingButton: {
-    position: 'absolute',
-    bottom: 200,
-    right: '10%',
-    backgroundColor: 'black',
+    justifyContent : "center",
+    backgroundColor: "black",
     borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 100,
-    display:'flex',
-    flexDirection:'row',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 3,
+    display: "flex",
+    flexDirection: "row",
   },
   floatingButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 

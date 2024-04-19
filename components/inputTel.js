@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Animated, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 
-const Input = () => {
+const Input = ({onChangeText}) => {
   const [text, setText] = useState('');
   const [isValid, setIsValid] = useState(true); // État pour la validité du numéro de téléphone
   const floatingLabelAnimation = useRef(new Animated.Value(text ? 1 : 0)).current;
@@ -63,6 +63,7 @@ const Input = () => {
   const handleTextChange = (inputText) => {
     const formattedText = formatPhoneNumber(inputText);
     setText(formattedText);
+    onChangeText(formattedText); // Pass the formatted text value to the parent component
     setIsValid(validatePhoneNumber(formattedText)); // Mise à jour de la validité du numéro de téléphone
   };
 

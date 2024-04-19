@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -6,39 +6,29 @@ import Acceuil from '../view/wallet_transaction_history/acceuil';
 import Rubrique from '../view/rubriques/rubrique';
 import Account from '../view/my_account/account';
 import PayementStack from './payemantStack';
+import Attente from '../view/attente/attente';
+import { account } from '../utils/images';
 
 
 
 
-export default function BottomtabNavigator()  {
+export default function ValidationStack()  {
 
     const Tab = createBottomTabNavigator();
 
 return(
     <Tab.Navigator
-    initialRouteName='Acceuil'
+    initialRouteName='Waiting'
     screenOptions={{
         tabBarActiveTintColor: '#FDFF96',
     }}>
     <Tab.Screen
-        name='Portefeuille'
-        component={PayementStack}
+        name='Waiting'
+        component={Attente}
         options={{
-            tabBarLabel: 'Portefeuille',
+            tabBarLabel: 'Acceuil',
             tabBarIcon: ({ color, size, borderColor }) => (
                 <MaterialCommunityIcons name="home" color={color} size={size} borderColor = '#000'/>
-            ),
-            tabBarLabelStyle : {color: '#000'},
-            headerShown : false
-        }}
-    />
-    <Tab.Screen
-        name='Rubrique'
-        component={Rubrique}
-        options={{
-            tabBarLabel: 'Rubrique',
-            tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="bell" color={color} size={size} />
             ),
             tabBarLabelStyle : {color: '#000'},
             headerShown : false
@@ -50,12 +40,12 @@ return(
     options={{
         tabBarLabel: 'Profile',
         tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <Image source={account}/>
         ),
         tabBarLabelStyle : {color: '#000'},
         headerShown : false
     }}
-  />
+    />
 </Tab.Navigator>
 )
 }
