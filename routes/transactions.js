@@ -227,7 +227,7 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
 
 
 /* Endpoints de cotisation */
-
+//Creation de la cotisation
 .post('/cotisation/Init', authentification, async(req, res) => {
      const user = req.user;
     const rubriqueId = await Rubrique.findOne({_id : req.body.rubrique})
@@ -248,7 +248,7 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
     }
 })
 
-
+ //Recupère l'ensembles des cotisations pour l'utilisateur courant
 .get('/cotisation', authentification, async(req, res) => {
     const cotisations = await Cotisation.find(req.user)
 if(cotisations == null){
@@ -259,10 +259,11 @@ if(cotisations == null){
 
 })
 
+  //Recupère le montant total de cotisation de l'utilisateur courant pour une rubrique particulière
 .get('/cotisations/rubrique/:id', authentification, async (req, res) => {
     const rubriqueId = req.params.id;
     try {
-        const transactions = await Cotisation.find({ rubrique: rubriqueId, userId : user._id  });
+        const transactions = await Cotisation.find({ rubrique: rubriqueId, userId : req.user._id  });
         let totalAmount = 0;
         transactions.forEach(transaction => {
             totalAmount += transaction.amount;
@@ -273,7 +274,8 @@ if(cotisations == null){
     }
 })
 
-.get('/cotisations/rubrique/:id', authentification, async (req, res) => {
+  //Recupère le montant total de cotisation de chaque utilisateur pour une rubrique particulière
+.get('/cotisations/rubrique/montant/:id', authentification, async (req, res) => {
     const rubriqueId = req.params.id;
     try {
         const transactions = await Cotisation.find({ rubrique: rubriqueId }).populate('user', 'name avatar');
@@ -291,6 +293,7 @@ if(cotisations == null){
     }
 })
 
+  //Recupère l'ensemble des cotisations l'utilisateur courant pour une rubrique particulière
 .get('/cotisations/rubrique/:id', authentification, async (req, res) => {
     const user = req.user;
     const rubriqueId = req.params.id;
@@ -305,10 +308,10 @@ if(cotisations == null){
 // Endpoint pour le webhook de paiement
 .post('/webhook', async (req, res) => {
     const event = req.body;
+    // Recupère le corp de la requete
     const paiement = new Paiment(event);
     
     try {
-        // Retrieve the request's body
         // Sauvegarder les données de paiement dans la base de données
         paiement.save();
          res.status(200).send("Données de paiement sauvegardées avec succès");
