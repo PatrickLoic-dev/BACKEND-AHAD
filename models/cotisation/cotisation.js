@@ -8,6 +8,7 @@ const cotisationSchema = new mongoose.Schema({
     },
     montant: {
         type: Number,
+        required : true
     },
     rubrique : {
         type: mongoose.Schema.Types.ObjectId,
