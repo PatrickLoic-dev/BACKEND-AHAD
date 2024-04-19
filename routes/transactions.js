@@ -59,6 +59,17 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
     }
 })
 
+.get('/users/invalid', async (req, res, next) => {
+    try {
+        // Query users where "estValide" is false
+        const invalidUsers = await User.find({ estValide: false });
+
+        res.status(200).json(invalidUsers);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+
 //Obtention de la liste des utilisateurs
 .get('/users', authentification, async (req, res, next) => {
     try {
