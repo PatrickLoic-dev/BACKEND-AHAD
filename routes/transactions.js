@@ -235,7 +235,7 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
     const cotisation = new Cotisation(
         userId = user._id,
         montant = req.body.montant,
-        rubrique = req.rubrique
+        rubrique = rubriqueId._id
     ); 
     if(req.montant < rubriqueId.montant) {
         res.status(400).send("Montant insuffisant !")
