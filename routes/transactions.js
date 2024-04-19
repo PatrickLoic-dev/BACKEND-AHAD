@@ -229,17 +229,17 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
 /* Endpoints de cotisation */
 
 .post('/cotisation/Init', authentification, async(req, res) => {
-    const user = req.user;
-    const rubrique = await Rubrique.findOne(req.rubrique)
+     const user = req.user;
+    const rubriqueId = await Rubrique.findOne(req.rubrique)
 
     const cotisation = new Cotisation(
         userId = user._id,
         montant = req.body.montant,
         rubrique = req.rubrique
     ); 
-    if(req.montant < rubrique.montant) {
+    if(req.montant < rubriqueId.montant) {
         res.status(400).send("Montant insuffisant !")
-    }  
+    }
     try {
         const saveCotisation = await cotisation.save();
         res.status(200).send(saveCotisation);
@@ -247,6 +247,7 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
         res.status(400).send(error);
     }
 })
+
 
 .get('/cotisation', authentification, async(req, res) => {
     const cotisations = await Cotisation.find(req.user)
