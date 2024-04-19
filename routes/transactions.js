@@ -91,19 +91,22 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
 
 //Modification des données d'un utilisateur
 .patch('/users/me', authentification, upload.single('avatar'), async (req, res, next) => {
-    const updatedInfo = Object.keys(req.body);
-     if(req.file) 
-     {
-        updatedInfo.avatar = req.file.path;
-      }
-
+    const userId = req.user._id;
 
     try {
+       let updatedFields = {}; // Object to hold updated user fields
 
-        updatedInfo.forEach(update => req.user[update] = req.body[update]);
-        await req.user.save();
+    if (req.file) {
+      updatedFields.avatar = req.file.path; // Set the avatar field to the file path
+    }
 
-        res.send(req.user);
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      { $set: updatedFields },
+      { new: true }
+    );
+
+        res.send(user);
     } catch (error) {
         res.status(500).send(error);
     }
