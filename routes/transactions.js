@@ -101,6 +101,29 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
 })
 
 //Modification des données d'un utilisateur
+.patch('/users/:id', authentification, upload.single('avatar'), async (req, res, next) => {
+    const updatedInfo = Object.keys(req.body);
+
+    const userId = req.params.id;
+
+    const user = await User.findById(userId);
+
+
+
+    try {
+        if (req.file) {
+        updatedInfo.avatar = req.file.path; // Set the avatar field to the file path
+        }
+
+        updatedInfo.forEach(update => user[update] = req.body[update]);
+        await user.save();
+
+        res.send(user);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+  
 .patch('/users/me', authentification, upload.single('avatar'), async (req, res, next) => {
     const updatedInfo = Object.keys(req.body);
 
