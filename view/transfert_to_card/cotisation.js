@@ -16,15 +16,49 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Profile } from '../../api/userAPI';
+import { initializeCotisation } from "../../api/cotisationAPI";
 
 
 
 const data = [];
 
+const selectedData = [];
+
 const Cotisation = ({navigation}) => {
-  const [Rubriques, setRubriques] = useState([]);
+  const [user, setUser] = useState('');  
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+  const [amount, setAmount] = useState('');
+
+  const handleInputChange = (value) => {
+    setAmount(value);
+    console.log(amount) // Update the amount state with the new value
+  };
   
 
+  const handleCotisation = () =>{
+  
+    selectedData.push(value._id);
+   
+    console.log('Cotisation : '+ amount)
+    console.log('Rubrique : '+ selectedData)
+    console.log('User ID : '+ user._id)
+    initializeCotisation({
+      montant : amount,
+      rubrique : value._id
+    }).then((result) => {
+      if (result.status == 200) {
+        console.log(result.data);
+        navigation.navigate("CotisationComplete", {Montant : amount, Solde : user.solde})
+      }
+      else if (result.status == 400) {
+        console.log(result.data);
+      }
+    }).catch((err) => {
+      console.error("Error" + err);
+    })
+  
+  }
 
     useEffect(() => {
       GetProfile();
@@ -32,6 +66,7 @@ const Cotisation = ({navigation}) => {
     
     const GetProfile = () =>{
       Profile().then((result) => {
+        setUser(result.data);
         console.log("Rubriques :" + result.data.rubriques);
         result.data.rubriques.forEach(rubrique => {
           data.push(rubrique);
@@ -42,8 +77,6 @@ const Cotisation = ({navigation}) => {
       });
   }
 
-    const [value, setValue] = useState(null);
-    const [isFocus, setIsFocus] = useState(false);
 
     const renderLabel = () => {
       if (value || isFocus) {
@@ -70,7 +103,12 @@ const Cotisation = ({navigation}) => {
 
       <View style={styles.containAmount}>
         <Text style={styles.device}>XAF</Text>
-        <TextInput placeholder="2000" style={styles.amount} keyboardType="numeric">
+        <TextInput 
+          placeholder="2000" 
+          style={styles.amount} 
+          keyboardType="numeric"
+          onChangeText = {handleInputChange}
+          value={amount}>
         </TextInput>
         <Text style={styles.secondAmount}>.00</Text>
       </View>
@@ -92,10 +130,10 @@ const Cotisation = ({navigation}) => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setValue(item.intitule);
+            setValue(item);
             setIsFocus(false);
+            console.log(item.intitule);
             console.log(item);
-            console.log(item.intitule)
           }}
           renderLeftIcon={() => (
             <AntDesign
@@ -110,7 +148,7 @@ const Cotisation = ({navigation}) => {
       <View style={styles.btnContainer}>
         <TouchableOpacity
           style={styles.floatingButton}
-          onPress={() => navigation.navigate("")}
+          onPress={handleCotisation}
         >
           <Text style={styles.floatingButtonText}>Confirmer</Text>
         </TouchableOpacity>
@@ -137,7 +175,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
-    marginBottom : 133,
+    marginBottom : 33,
   },
   icon: {
     marginRight: 5,
@@ -180,14 +218,17 @@ const styles = StyleSheet.create({
   },
   device: {
     fontSize: 24,
+    fontWeight : '900'
   },
   amount: {
     fontSize: 56,
     paddingBottom: 20,
     marginHorizontal: 5,
+    fontWeight : '900'
   },
   secondAmount: {
     fontSize: 24,
+    fontWeight : '900'
   },
   floatingButton: {
     backgroundColor: "black",

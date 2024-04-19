@@ -35,9 +35,44 @@ export const registration = async data  => {
     }
 }
 
+
+export const nonValidatedUsersList = async () =>{
+    try {
+        const result = await axios.get('https://backend-ahad-production.up.railway.app/api/v1/users/invalid', {
+            headers: {
+                'Authorization': `Bearer ${authToken._j}`
+            },
+        },)
+        return result;
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+
+
 export const updateUser = async data => {
     try {
         const result = await apiManager	("/users/me", {
+            method : "PATCH",
+            headers : {
+                'Content-Type' : "application/json",
+                'Authorization': `Bearer ${authToken._j}`
+            },
+            data : data
+        
+        })
+        return result;
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+
+
+export const updateUserByID = async (data, id) => {
+    try {
+        const result = await apiManager	(`/users/${id}`, {
             method : "PATCH",
             headers : {
                 'Content-Type' : "application/json",
@@ -72,6 +107,32 @@ export const logout = async () => {
             headers: {
                 'Authorization': `Bearer ${authToken._j}`
             }
+        });
+        return result;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const GetCotisationsPourRubrique = async (id) => {
+    try {
+        const result = await axios.get(`https://backend-ahad-production.up.railway.app/api/v1//cotisations/rubrique/montant/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${authToken._j}`
+            },
+        });
+        return result;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const MontantTotalCotisationsPourRubrique = async (id) => {
+    try {
+        const result = await axios.get(`https://backend-ahad-production.up.railway.app/api/v1//cotisations/rubrique/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${authToken._j}`
+            },
         });
         return result;
     } catch (error) {

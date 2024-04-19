@@ -16,7 +16,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { updateUser } from "../../api/userAPI";
 
-const PayementSent = ({route, navigation}) => {
+const CotisationSent = ({route, navigation}) => {
   const {Montant, Solde} = route.params;
 
   const montantNumber = parseFloat(Montant);
@@ -26,7 +26,7 @@ const PayementSent = ({route, navigation}) => {
   useEffect(() => {
     console.log(`Montant : ${Montant}`);
     console.log(`Solde : ${Solde}`);
-    console.log(`Solde + Montant : ${montantNumber + soldeNumber}`);
+    console.log(`Solde - Montant : ${soldeNumber - montantNumber}`);
   }, []);
 
 
@@ -50,7 +50,7 @@ const PayementSent = ({route, navigation}) => {
             </View>
 
       <ImageBackground source={finishedBackground} style= {styles.done}>
-      <Text style={styles.title}>Recharge effectué</Text>
+      <Text style={styles.title}>Cotisation effectué</Text>
 
         <View style={styles.containAmount}>
           <Text style={styles.device}>XAF</Text>
@@ -144,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PayementSent;
+export default CotisationSent;

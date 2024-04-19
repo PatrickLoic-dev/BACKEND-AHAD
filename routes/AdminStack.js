@@ -9,6 +9,8 @@ import Account from '../view/my_account/account';
 import PayementStack from './payemantStack';
 import demandeUser from '../view/users/demandeUser';
 import DemandeUser from '../view/users/demandeUser';
+import DetailUser from '../view/Detail/DetailUser';
+import UserStack from './UserStack';
 
 
 
@@ -48,18 +50,19 @@ return(
         }}
     />
 
-<Tab.Screen
-        name='Users'
-        component={DemandeUser}
-        options={{
-            tabBarLabel: 'Utilisateurs',
-            tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="bell" color={color} size={size} />
-            ),
-            tabBarLabelStyle : {color: '#000'},
-            headerShown : false
-        }}
-    />
+    <Tab.Screen
+            name='Users'
+            component={UserStack}
+            options={{
+                tabBarLabel: 'Utilisateurs',
+                tabBarIcon: ({ color, size }) => (
+                    <MaterialCommunityIcons name="bell" color={color} size={size} />
+                ),
+                tabBarLabelStyle : {color: '#000'},
+                headerShown : false
+            }}
+        />
+
     <Tab.Screen
     name="Profile"
     component={Account}

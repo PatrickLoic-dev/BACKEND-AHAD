@@ -5,6 +5,7 @@ import Acceuil from '../view/wallet_transaction_history/acceuil';
 import Transfert from '../view/charge_mobile/my_number';
 import PayementSent from '../view/charge_mobile/payement_sent';
 import Cotisation from '../view/transfert_to_card/cotisation';
+import CotisationSent from '../view/transfert_to_card/cotisation_sent';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,10 @@ const PayementStack = () => {
         <Stack.Screen 
             name="Cotisation" 
             component={Cotisation} />
+
+        <Stack.Screen 
+            name="CotisationComplete" 
+            component={CotisationSent} />
     
 
         <Stack.Screen 

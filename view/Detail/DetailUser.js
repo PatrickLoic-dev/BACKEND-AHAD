@@ -2,52 +2,33 @@ import React, {useEffect, useState} from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Switch } from 'react-native';
 import { abstractBackgroundBlue, abstractBackgroundBlueSVG, avatar, block, calendar, card, chevron, faceIDIcon, investing, mailIcon, pAvatar, pencil, phoneIcon, scale, search, userIcon } from '../../utils/images';
 import { principalColor, RedColor, RPColor, textSecondaryColor } from '../../utils/constantes';
-import { logout, Profile } from '../../api/userAPI';
+import { logout, Profile, updateUserByID } from '../../api/userAPI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const authToken = AsyncStorage.getItem('AuthToken');
 
 
-
-const Account = ({navigation}) => {
+const DetailUser = ({route, navigation}) => {
     
-    const [isEnabled, setIsEnabled] = useState(false);
-    const [user, setUser] = useState('');
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    
-    const handleLogout = () => {
-        logout()
-          .then((result) => {
-            if (result.status == 200) {
-                console.log(result.data);
-                AsyncStorage.removeItem('AuthToken');
-                navigation.replace('Login');
-            }
-          })
-          .catch((err) => {
-            console.error("Error" + err);
-          });
-      };
-    useEffect(() => {
-        GetProfile();
-    }, []);
+    const user = route.params;
 
-    const GetProfile = () =>{
-        Profile().then((result) => {
-            setUser(result.data);
-            console.log(user);
-        }).catch(err => {
-            console.error("Error"+ err);    
+    const handleUpdateStatus = () => { 
+        updateUserByID({
+          estValide : true
+        },user._id).then((result) => {
+          if (result.status == 200) {
+            console.log(result.data);
+            navigation.replace("UsersList");
+          }
+        }).catch((err) => {
+          console.error("Error" + err);
         });
-        // console.log(authToken._j);
-    }
+      }
+
 return (
     <ImageBackground  source={abstractBackgroundBlue} style={styles.container}>
-        <Text style = {styles.head}>My account</Text>
+        <Text style = {styles.head}>Details</Text>
         <Image source={{uri : `https://backend-ahad-production.up.railway.app/uploads//1712714150194.png`}} style = {styles.avatar}/>
-        <TouchableOpacity style = {{backgroundColor : '#FFF', padding : 20, borderRadius : 50, height : 40, width :40, justifyContent : 'center', alignItems : 'center', position :'absolute', zIndex :100, top : 154, right : 137}}>
-            <Image source={pencil}/>
-        </TouchableOpacity>
+
         
         <View style = {styles.bottomSheet}>
             <Text style = {{fontSize  :12, fontWeight : '600', color: textSecondaryColor, marginTop : 20, marginBottom : 24, marginLeft : 124}}>Information personnelle</Text>
@@ -86,29 +67,14 @@ return (
                 </View>
             </View>
 
-            <Text style = {{fontSize  :12, fontWeight : '600', color: textSecondaryColor, marginTop : 20, marginBottom : 24, marginLeft : 154}}>Paramètres</Text>
-            <View style = {styles.item}>
-                <Image source={faceIDIcon}/>
-                <View style = {{marginRight : 24}}>
-                    <Text style = {{fontSize  :14, fontWeight : '600', color: principalColor , marginBottom : 8}}>Authoriser Face ID</Text>
-                    <Text style = {{fontSize  :12, fontWeight : '600', color: textSecondaryColor}}>Utiliser Face ID pour se connecter</Text>
-                </View>
-                <Switch
-                    trackColor={{false: '#767577', true: '#365FF1'}}
-                    thumbColor={isEnabled ? '#FFF' : '#f4f3f4'}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isEnabled}
-                />
-            </View>
-
-            <TouchableOpacity style = {styles.item} onPress={handleLogout}>
-                <Image source={block} style = {{height :40, width : 40}}/>
-                <View>
-                    <Text style = {{fontSize  :14, fontWeight : '600', color: RedColor , marginBottom : 8}}>Deconnexion</Text>
-                    <Text style = {{fontSize  :12, fontWeight : '600', color: RPColor}}>Appuyez ici pour vous deconnecter</Text>
-                </View>
-            </TouchableOpacity>
+            <View style={styles.btnContainer}>
+          <TouchableOpacity
+            style={styles.floatingButton}
+            onPress={handleUpdateStatus}
+          >
+            <Text style={styles.floatingButtonText}>Valider</Text>
+          </TouchableOpacity>
+      </View>
         </View>
     </ImageBackground>
     );
@@ -165,8 +131,27 @@ const styles = StyleSheet.create({
         borderWidth : 3,
         marginBottom : 44
     }, 
+    btnContainer: {
+        alignItems: "center",
+      },
+      floatingButton: {
+        marginLeft : 100,
+        backgroundColor: "black",
+        borderRadius: 30,
+        paddingVertical: 10,
+        marginTop: 40,
+        marginHorizontal: 50,
+        paddingHorizontal: 60,
+        display: "flex",
+        flexDirection: "row",
+      },
+      floatingButtonText: {
+        color: "white",
+        fontSize: 18,
+        fontWeight: "bold",
+      },
     
 });
 
 
-export default Account
+export default DetailUser

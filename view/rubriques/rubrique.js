@@ -1,32 +1,118 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { abstractBackgroundBlue, avatar, calendar, card, chevron, investing, scale, search } from '../../utils/images';
 import { principalColor, textSecondaryColor } from '../../utils/constantes';
-import React from 'react';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Ionicons';
+import React , {useEffect, useState} from 'react';
+import { Dropdown } from 'react-native-element-dropdown';
+import { GetCotisationsPourRubrique, MontantTotalCotisationsPourRubrique, Profile } from '../../api/userAPI';
+
+const data = [];
 
 const Rubrique = () => {
-  return (
+    const [value, setValue] = useState(null);
+    const [isFocus, setIsFocus] = useState(false);
+    const [montant, setMontant] = useState(0);
+
+
+
+
+
+
+    useEffect(() => {
+        GetProfile();
+        }, []);
+        
+
+        const GetMontantCotisation = () =>{
+            MontantTotalCotisationsPourRubrique().then((result) => {
+
+            }).catch((err) => {
+
+            })
+        }
+
+        const GetUsersContribution = () =>{
+            GetCotisationsPourRubrique().then((result) => {
+
+            }).catch((err) => {
+                
+            })
+        }
+
+
+
+
+        const GetProfile = () =>{
+        Profile().then((result) => {
+            console.log("Rubriques :" + result.data.rubriques);
+            result.data.rubriques.forEach(rubrique => {
+            data.push(rubrique);
+            });
+            console.log(data);
+        }).catch(err => {
+            console.error("Error"+ err);    
+        });
+    }
+
+
+    const renderLabel = () => {
+    if (value || isFocus) {
+        return (
+        <Text style={[styles.label, isFocus && { color: 'blue' }]}>
+            Rubriques
+        </Text>
+        );
+    }
+    return null;
+    };
+
+
+
+return (
     <ImageBackground  source={abstractBackgroundBlue} style={styles.container}>
-             
 
             <View style = {styles.head}>
-                <Image source={card} style = {styles.icon}></Image>
-                <TouchableOpacity>
-                    <Image source={chevron} style = {{height : 16, width: 16}}></Image>
-                </TouchableOpacity>
+                <Dropdown
+                style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={data}
+                search
+                maxHeight={300}
+                labelField="intitule"
+                valueField="value"
+                placeholder={!isFocus ? 'Rubriques' : '...'}
+                searchPlaceholder="Search..."
+                value={value}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={item => {
+                    setValue(item);
+                    setIsFocus(false);
+                    console.log(item.intitule);
+                    console.log(item);
+                }}
+                renderLeftIcon={() => (
+                    <AntDesign
+                    style={styles.icon}
+                    color={isFocus ? 'blue' : 'black'}
+                    name="creditcard"
+                    size={20}
+                    />
+                )}
+                />
             </View>
 
             <View style = {styles.solde}>
-                <Text style = {{fontSize : 14, color : textSecondaryColor, fontWeight : '600'}}>Available balance</Text>
+                <Text style = {{fontSize : 14, color : textSecondaryColor, fontWeight : '600'}}>Cotisation Totale</Text>
                 <View style = {styles.montant}>
-                    <Text style = {{fontSize : 24, fontWeight : '900'}}>XAF</Text>
                     <Text style = {{fontSize : 56, fontWeight : '900'}}>2,500</Text>
+                    <Text style = {{fontSize : 24, fontWeight : '900'}}>XAF</Text>
                 </View>
                 <Text style = {{fontSize : 14, color : textSecondaryColor, fontWeight : '600'}}>Vous</Text>
-            </View>
-
-            <View style = {styles.graph}>
-                <Image source = {investing} style = {{marginBottom : 18, height : 144}}/>           
-                <Image source = {scale} style = {{marginBottom : 30, height : 36}}/>           
             </View>
 
 
@@ -182,7 +268,7 @@ const styles = StyleSheet.create({
         alignItems : "center",
         justifyContent : "space-between",
         marginTop : 16,
-        paddingHorizontal : 8,
+        paddingHorizontal : 18,
     },
     view : {
         marginTop:18,
@@ -203,10 +289,42 @@ const styles = StyleSheet.create({
     content : {
         marginRight : 180
     },
-    graph : {
-        marginTop : 24,
-        marginBottom: 32
-    }
+    dropdown: {
+        height: 50,
+        width : 250,
+        borderColor: 'gray',
+        borderWidth: 0,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+        marginLeft : 33,
+    },
+    icon: {
+        marginRight: 5,
+    },
+    label: {
+        position: 'absolute',
+        backgroundColor: 'white',
+        left: 22,
+        top: 8,
+        zIndex: 999,
+        paddingHorizontal: 8,
+        fontSize: 14,
+    },
+    placeholderStyle: {
+        fontSize: 16,
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+        fontWeight : '900'
+    },
+    iconStyle: {
+        width: 20,
+        height: 20,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
+    },
 });
 
 export default Rubrique;
