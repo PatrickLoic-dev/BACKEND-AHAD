@@ -301,7 +301,7 @@ if(cotisations == []){
     const user = req.user;
     const rubriqueId = req.params.id;
     try {
-        const transactions = await Cotisation.find({ rubrique: rubriqueId, userId : user._id }).populate('rubriques')
+        const transactions = await Cotisation.find({ rubrique: rubriqueId, userId : user._id }).populate('rubrique')
         res.send(transactions);
     } catch (error) {
         res.status(500).send(error);
