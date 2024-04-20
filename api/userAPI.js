@@ -79,7 +79,6 @@ export const updateUserByID = async (data, id) => {
                 'Authorization': `Bearer ${authToken._j}`
             },
             data : data
-        
         })
         return result;
     } catch (error) {
@@ -117,6 +116,18 @@ export const logout = async () => {
 export const GetCotisationsPourRubrique = async (id) => {
     try {
         const result = await axios.get(`https://backend-ahad-production.up.railway.app/api/v1/users/rubrique/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${authToken._j}`
+            },
+        });
+        return result;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+export const GetCotisations = async (id) => {
+    try {
+        const result = await axios.get(`https://backend-ahad-production.up.railway.app/api/v1/cotisation`, {
             headers: {
                 'Authorization': `Bearer ${authToken._j}`
             },

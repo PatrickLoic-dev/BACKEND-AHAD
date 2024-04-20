@@ -28,7 +28,7 @@ export default function Login({ navigation }) {
 
   const getCont = () => {
   if(isLoading == true){
-    return <ActivityIndicator color="white" size="small" />;
+    return <ActivityIndicator color="white" size="small" style={styles.floatingButtonText}/>;
   }else{
     return <Text style={styles.floatingButtonText}>Connexion</Text>;
   }

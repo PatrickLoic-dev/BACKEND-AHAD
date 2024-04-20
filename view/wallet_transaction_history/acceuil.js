@@ -2,23 +2,30 @@ import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { abstractBackground, avatar, calendar, card, category, chevron, coin, exchange, invoice, search } from '../../utils/images';
 import { principalColor, textSecondaryColor } from '../../utils/constantes';
-import { Profile } from '../../api/userAPI';
+import { GetCotisations, Profile } from '../../api/userAPI';
+import listItem from '../../components/listItem';
+
+
 
 const Acceuil = ({navigation}) => {
 
     const [user, setUser] = useState('');
+    const [cotisations, setCotisations] = useState([]);
 
     useEffect(() => {
         // Fetch user profile initially
         GetProfile();
+        GetAllCotisations();
 
         // Fetch user profile every 60 seconds
         const interval = setInterval(() => {
             GetProfile();
+            GetAllCotisations();
         }, 30000); // 30000 milliseconds = 30 seconds
 
         // Clean up the interval to avoid memory leaks
         return () => clearInterval(interval);
+
     }, []);
 
 
@@ -30,6 +37,19 @@ const Acceuil = ({navigation}) => {
             console.error("Error"+ err);    
         });
     }
+
+    
+    const GetAllCotisations = () =>{
+        GetCotisations().then((result) => {
+            console.log('Data :');
+            console.log(result.data);
+            setCotisations(result.data);
+        }).catch(err => {
+            console.error("Error"+ err);    
+        });
+    }
+
+
 
     return (
         <ImageBackground  source={abstractBackground} style={styles.container}>
@@ -83,99 +103,12 @@ const Acceuil = ({navigation}) => {
                     <Text style = {{fontSize : 12, color : textSecondaryColor}}>Historique</Text>
                     <Image source={search} style = {styles.icon}/>
                 </View>
-                <ScrollView showsVerticalScrollIndicator = {false} style = {styles.view}>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-                </ScrollView>
+                <FlatList
+                    data={cotisations}
+                    keyExtractor={(item) => item._id}
+                    renderItem={listItem}
+                    style = {styles.view}
+                />
             </View>
         </ImageBackground>
     );

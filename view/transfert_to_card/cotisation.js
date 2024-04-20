@@ -36,7 +36,7 @@ const Cotisation = ({navigation}) => {
     if(isLoading == true){
       return <ActivityIndicator color="white" size="small" />;
     }else{
-      return <Text style={styles.floatingButtonText}>Connexion</Text>;
+      return <Text style={styles.floatingButtonText}>Cotiser</Text>;
     }
   }
 

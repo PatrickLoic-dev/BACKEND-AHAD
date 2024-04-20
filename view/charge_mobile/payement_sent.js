@@ -15,15 +15,26 @@ import {
 } from "../../utils/images";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { updateUser } from "../../api/userAPI";
+import { ActivityIndicator } from "react-native-paper";
 
 const PayementSent = ({route, navigation}) => {
   const {Montant, Solde, Type} = route.params;
+  let [isLoading, setIsLoading] = useState();  
 
   const montantNumber = parseFloat(Montant);
   const soldeNumber = parseFloat(Solde);
   const Newsolde = checkType();
 
-const checkType = () => { 
+  const getCont = () => {
+    if(isLoading == true){
+      return <ActivityIndicator color="white" size="small" />;
+    }else{
+      return <Text style={styles.floatingButtonText}>Terminé !</Text>;
+    }
+  }
+
+
+function checkType() { 
   if(Type == "Recharge"){
     const Newsolde = montantNumber + soldeNumber; 
     return Newsolde
@@ -47,9 +58,11 @@ const checkType = () => {
     }).then((result) => {
       if (result.status == 200) {
         console.log(result.data);
+        setIsLoading(false);
         navigation.replace("Acceuil");
       }
     }).catch((err) => {
+      setIsLoading(false);
       console.error("Error" + err);
     });
   }
@@ -76,7 +89,7 @@ const checkType = () => {
             style={styles.floatingButton}
             onPress={handleUpdateSolde}
           >
-            <Text style={styles.floatingButtonText}>Terminé !</Text>
+            {getCont()}
           </TouchableOpacity>
       </View>
       </ImageBackground>
