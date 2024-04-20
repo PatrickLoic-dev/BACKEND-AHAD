@@ -260,7 +260,7 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
 
  //Recupère l'ensembles des cotisations pour l'utilisateur courant
 .get('/cotisation', authentification, async(req, res) => {
-    const cotisations = await Cotisation.find({userId : req.users._id})
+    const cotisations = await Cotisation.find({userId : req.user._id})
 if(cotisations == []){
     res.status(200).send("Aucune cotisations trouvé pour cet utilisateur")
 }else{
