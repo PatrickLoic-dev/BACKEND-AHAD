@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList,ImageBackground, ScrollView } from 'react-native';
 import { abstractBackgroundBlue, avatar, calendar, card, chevron, investing, scale, search } from '../../utils/images';
 import { principalColor, textSecondaryColor } from '../../utils/constantes';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -6,13 +6,16 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import React , {useEffect, useState} from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 import { GetCotisationsPourRubrique, MontantTotalCotisationsPourRubrique, Profile } from '../../api/userAPI';
+import listItem from '../../components/listItem';
 
 const data = [];
 
 const Rubrique = () => {
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
-    const [montant, setMontant] = useState(0);
+    const [cotisation, setCotisation] = useState(0);
+
+    const [cotisations, setCotisations] = useState([]);
 
 
 
@@ -25,18 +28,22 @@ const Rubrique = () => {
         
 
         const GetMontantCotisation = () =>{
-            MontantTotalCotisationsPourRubrique().then((result) => {
-
+            MontantTotalCotisationsPourRubrique(value._id).then((result) => {
+                console.log("Donnee : ");
+                console.log(result.data.totalAmount);
+                setCotisation(result.data.totalAmount)
             }).catch((err) => {
-
+                console.error("Error"+ err); 
             })
         }
 
         const GetUsersContribution = () =>{
-            GetCotisationsPourRubrique().then((result) => {
-
+            GetCotisationsPourRubrique(value._id).then((result) => {
+                console.log('Data :');
+                console.log(result.data);
+                setCotisations(result.data);
             }).catch((err) => {
-                
+                console.error("Error"+ err); 
             })
         }
 
@@ -56,16 +63,6 @@ const Rubrique = () => {
     }
 
 
-    const renderLabel = () => {
-    if (value || isFocus) {
-        return (
-        <Text style={[styles.label, isFocus && { color: 'blue' }]}>
-            Rubriques
-        </Text>
-        );
-    }
-    return null;
-    };
 
 
 
@@ -92,6 +89,8 @@ return (
                 onChange={item => {
                     setValue(item);
                     setIsFocus(false);
+                    GetMontantCotisation();
+                    GetUsersContribution();
                     console.log(item.intitule);
                     console.log(item);
                 }}
@@ -109,7 +108,7 @@ return (
             <View style = {styles.solde}>
                 <Text style = {{fontSize : 14, color : textSecondaryColor, fontWeight : '600'}}>Cotisation Totale</Text>
                 <View style = {styles.montant}>
-                    <Text style = {{fontSize : 56, fontWeight : '900'}}>2,500</Text>
+                    <Text style = {{fontSize : 56, fontWeight : '900'}}>{cotisation? cotisation : 'NO'}</Text>
                     <Text style = {{fontSize : 24, fontWeight : '900'}}>XAF</Text>
                 </View>
                 <Text style = {{fontSize : 14, color : textSecondaryColor, fontWeight : '600'}}>Vous</Text>
@@ -122,99 +121,15 @@ return (
                     <Text style = {{fontSize : 12, color : textSecondaryColor, fontWeight: "600"}}>Historique</Text>
                     <Image source={search} style = {styles.icon}/>
                 </View>
-                <ScrollView showsVerticalScrollIndicator = {false} style = {styles.view}>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.item}>
-                        <Image style = {styles.avatar} source={avatar}/>
-                        <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
-                        </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
-                    </TouchableOpacity>
-                </ScrollView>
+             
+                <FlatList
+                    data={cotisations}
+                    keyExtractor={(item) => item._id}
+                    renderItem={listItem}
+                    style = {styles.view}
+                />
+                
+           
             </View>
         </ImageBackground>
     );
@@ -268,27 +183,11 @@ const styles = StyleSheet.create({
         alignItems : "center",
         justifyContent : "space-between",
         marginTop : 16,
-        paddingHorizontal : 18,
+        paddingHorizontal : 32,
     },
     view : {
         marginTop:18,
     }, 
-    item : {
-        display : "flex", 
-        flexDirection: "row",
-        alignItems : "center",
-        paddingHorizontal : 8,
-        marginBottom: 16
-    },
-    avatar : {
-        marginLeft : 16,
-        height : 40,
-        width : 40,
-        marginRight :8
-    }, 
-    content : {
-        marginRight : 180
-    },
     dropdown: {
         height: 50,
         width : 250,

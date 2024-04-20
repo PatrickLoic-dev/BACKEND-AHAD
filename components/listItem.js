@@ -1,16 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { avatar } from '../utils/images'
+import { principalColor, textSecondaryColor } from '../utils/constantes';
 
-const listItem = () => {
+const listItem = ({item}) => {
 return (
             <TouchableOpacity style = {styles.item}>
                         <Image style = {styles.avatar} source={avatar}/>
                         <View style = {styles.content}>
-                            <Text style = {{fontWeight : '900', fontSize :14}}>AirBnb</Text>
-                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>Housing</Text>
+                            <Text style = {{fontWeight : '900', fontSize :14}}>Cotisation</Text>
+                            <Text style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 12}}>{item.rubrique.intitule}</Text>
                         </View>
-                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14}}>-1500</Text>
+                        <Text  style = {{fontWeight : '600', color: textSecondaryColor, fontSize : 14, marginRight :4}}>{item.montant}</Text>
             </TouchableOpacity>
 )
 }
@@ -32,6 +33,6 @@ const styles = StyleSheet.create({
         marginRight :8
     }, 
     content : {
-        marginRight : 180
+        marginRight : 150
     },
 })

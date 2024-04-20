@@ -116,7 +116,7 @@ export const logout = async () => {
 
 export const GetCotisationsPourRubrique = async (id) => {
     try {
-        const result = await axios.get(`https://backend-ahad-production.up.railway.app/api/v1//cotisations/rubrique/montant/${id}`, {
+        const result = await axios.get(`https://backend-ahad-production.up.railway.app/api/v1/users/rubrique/${id}`, {
             headers: {
                 'Authorization': `Bearer ${authToken._j}`
             },
@@ -129,7 +129,7 @@ export const GetCotisationsPourRubrique = async (id) => {
 
 export const MontantTotalCotisationsPourRubrique = async (id) => {
     try {
-        const result = await axios.get(`https://backend-ahad-production.up.railway.app/api/v1//cotisations/rubrique/${id}`, {
+        const result = await axios.get(`https://backend-ahad-production.up.railway.app/api/v1/cotisations/rubrique/${id}`, {
             headers: {
                 'Authorization': `Bearer ${authToken._j}`
             },

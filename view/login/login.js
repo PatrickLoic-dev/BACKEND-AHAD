@@ -19,10 +19,21 @@ import { parseJsonConfigFileContent } from "typescript";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { textSecondaryColor } from "../../utils/constantes";
 import { StatusBar } from "expo-status-bar";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  let [isLoading, setIsLoading] = useState();  
+
+  const getCont = () => {
+  if(isLoading == true){
+    return <ActivityIndicator color="white" size="small" />;
+  }else{
+    return <Text style={styles.floatingButtonText}>Connexion</Text>;
+  }
+
+  }
 
   const handleEmailChange = (value) => {
     setEmail(value);
@@ -41,6 +52,7 @@ export default function Login({ navigation }) {
         if (result.status == 200) {
           console.log(result.data);
           AsyncStorage.setItem("AuthToken", result.data.authToken);
+          setIsLoading(false);
 
           if (result.data.user.estValide == false) {
             navigation.replace("Validation");
@@ -90,9 +102,12 @@ export default function Login({ navigation }) {
           <View style={styles.btnContainer}>
             <TouchableOpacity
               style={styles.floatingButton}
-              onPress={handleLogin}
+              onPress={ () => {
+               handleLogin(),
+              setIsLoading(true)
+        }}
             >
-              <Text style={styles.floatingButtonText}>Connexion</Text>
+              {getCont()}
             </TouchableOpacity>
           </View>
           <View>

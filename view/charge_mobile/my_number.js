@@ -17,14 +17,25 @@ import { confirmPayement, initializePayement } from "../../api/depositAPI";
 import { notchApiManager } from "../../api/notchApiManager";
 import { updateUser } from "../../api/userAPI";
 import { Button, Dialog, Portal, PaperProvider } from 'react-native-paper';
+import { ActivityIndicator } from "react-native-paper";
 
 const Transfert = ({route, navigation}) => {
+
+  let [isLoading, setIsLoading] = useState();  
 
   const [visible, setVisible] = React.useState(false);
 
   const showDialog = () => setVisible(true);
 
   const hideDialog = () => setVisible(false);
+
+  const getCont = () => {
+    if(isLoading == true){
+      return <ActivityIndicator color="white" size="small" />;
+    }else{
+      return <Text style={styles.floatingButtonText}>Connexion</Text>;
+    }
+  }
 
 
 
@@ -66,6 +77,7 @@ const Transfert = ({route, navigation}) => {
             }
           },result.data.transaction.reference).then((result) => {
             if (result.status == 202) {
+              setIsLoading(false);
               console.log(result.data);
               console.log("Transaction effectué avec succès");
               navigation.navigate("Complete", {Montant : amount, Solde : solde})
@@ -106,9 +118,12 @@ const Transfert = ({route, navigation}) => {
       <View style={styles.btnContainer}>
         <TouchableOpacity
           style={styles.floatingButton}
-          onPress={handlePayement}
+          onPress={() => {
+            handlePayement();
+            setIsLoading(true);
+          }}
         >
-          <Text style={styles.floatingButtonText}>Confirmer</Text>
+          {getCont()}
         </TouchableOpacity>
       </View>
     </ImageBackground>
