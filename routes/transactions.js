@@ -304,7 +304,7 @@ if(cotisations == null){
 })
 
   //Recupère l'ensemble des cotisations l'utilisateur courant pour une rubrique particulière
-.get('/cotisations/rubrique/:id', authentification, async (req, res) => {
+.get('/users/rubrique/:id', authentification, async (req, res) => {
     const user = req.user;
     const rubriqueId = req.params.id;
     try {
