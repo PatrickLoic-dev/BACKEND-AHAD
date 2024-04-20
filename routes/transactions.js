@@ -124,15 +124,11 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
     }
 })
   
-.patch('/users/me', authentification, upload.single('avatar'), async (req, res, next) => {
+.patch('/users/me', authentification, async (req, res, next) => {
     const updatedInfo = Object.keys(req.body);
 
 
-
     try {
-     if (req.file) {
-        updatedInfo.avatar = req.file.path; // Set the avatar field to the file path
-      }
 
         updatedInfo.forEach(update => req.user[update] = req.body[update]);
         await req.user.save();
