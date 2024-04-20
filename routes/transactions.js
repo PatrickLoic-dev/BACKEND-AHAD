@@ -288,7 +288,7 @@ if(cotisations == []){
 .get('/cotisations/rubrique/montant/:id', authentification, async (req, res) => {
     const rubriqueId = req.params.id;
     try {
-        const transactions = await Cotisation.find({ rubrique: rubriqueId });
+        const transactions = await Cotisation.find({ rubrique: rubriqueId }).populate('users');
         let totalAmount = 0;
         const users = transactions.map(transaction => {
             totalAmount += transaction.montant;
