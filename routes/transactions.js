@@ -288,7 +288,7 @@ if(cotisations == []){
 .get('/cotisations/rubrique/montant/:id', authentification, async (req, res) => {
     const rubriqueId = req.params.id;
     try {
-        const transactions = await Cotisation.find({ rubrique: rubriqueId }).populate('user');
+        const transactions = await Cotisation.find({ rubrique: rubriqueId });
         let totalAmount = 0;
         const users = transactions.map(transaction => {
             totalAmount += transaction.montant;
@@ -308,7 +308,7 @@ if(cotisations == []){
     const user = req.user;
     const rubriqueId = req.params.id;
     try {
-        const transactions = await Cotisation.find({ rubrique: rubriqueId, userId : user._id }).populate('user');
+        const transactions = await Cotisation.find({ rubrique: rubriqueId, userId : user._id })
         res.send(transactions);
     } catch (error) {
         res.status(500).send(error);
