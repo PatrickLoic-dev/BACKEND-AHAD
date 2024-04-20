@@ -260,8 +260,8 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
 
  //Recupère l'ensembles des cotisations pour l'utilisateur courant
 .get('/cotisation', authentification, async(req, res) => {
-    const cotisations = await Cotisation.find(req.user)
-if(cotisations == null){
+    const cotisations = await Cotisation.find({userId : req.users._id})
+if(cotisations == []){
     res.status(200).send("Aucune cotisations trouvé pour cet utilisateur")
 }else{
     res.status(200).send(cotisations)
@@ -276,7 +276,7 @@ if(cotisations == null){
         const transactions = await Cotisation.find({ rubrique: rubriqueId, userId : req.user._id  });
         let totalAmount = 0;
         transactions.forEach(transaction => {
-            totalAmount += transaction.amount;
+            totalAmount += transaction.montant;
         });
         res.send({ totalAmount });
     } catch (error) {
@@ -291,7 +291,7 @@ if(cotisations == null){
         const transactions = await Cotisation.find({ rubrique: rubriqueId }).populate('user', 'name avatar');
         let totalAmount = 0;
         const users = transactions.map(transaction => {
-            totalAmount += transaction.amount;
+            totalAmount += transaction.montant;
             return {
                 name: transaction.user.name,
                 avatar: transaction.user.avatar
