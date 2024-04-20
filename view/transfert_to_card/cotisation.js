@@ -17,7 +17,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Profile } from '../../api/userAPI';
 import { initializeCotisation } from "../../api/cotisationAPI";
-
+import { ActivityIndicator } from "react-native-paper";
 
 
 const data = [];
@@ -29,6 +29,16 @@ const Cotisation = ({navigation}) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [amount, setAmount] = useState('');
+
+  let [isLoading, setIsLoading] = useState();  
+
+  const getCont = () => {
+    if(isLoading == true){
+      return <ActivityIndicator color="white" size="small" />;
+    }else{
+      return <Text style={styles.floatingButtonText}>Connexion</Text>;
+    }
+  }
 
   const handleInputChange = (value) => {
     setAmount(value);
@@ -48,8 +58,9 @@ const Cotisation = ({navigation}) => {
       rubrique : value._id
     }).then((result) => {
       if (result.status == 200) {
+        setIsLoading(false);
         console.log(result.data);
-        navigation.navigate("CotisationComplete", {Montant : amount, Solde : user.solde})
+        navigation.navigate("Complete", {Montant : amount, Solde : user.solde, Type : 'Cotisation'})
       }
       else if (result.status == 400) {
         console.log(result.data);
@@ -148,9 +159,12 @@ const Cotisation = ({navigation}) => {
       <View style={styles.btnContainer}>
         <TouchableOpacity
           style={styles.floatingButton}
-          onPress={handleCotisation}
+          onPress={() => {
+            handleCotisation();
+            setIsLoading(true);
+          }}
         >
-          <Text style={styles.floatingButtonText}>Confirmer</Text>
+          {getCont()}
         </TouchableOpacity>
       </View>
     </ImageBackground>

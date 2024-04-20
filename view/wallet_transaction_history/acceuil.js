@@ -9,8 +9,18 @@ const Acceuil = ({navigation}) => {
     const [user, setUser] = useState('');
 
     useEffect(() => {
+        // Fetch user profile initially
         GetProfile();
+
+        // Fetch user profile every 60 seconds
+        const interval = setInterval(() => {
+            GetProfile();
+        }, 30000); // 30000 milliseconds = 30 seconds
+
+        // Clean up the interval to avoid memory leaks
+        return () => clearInterval(interval);
     }, []);
+
 
     const GetProfile = () =>{
         Profile().then((result) => {

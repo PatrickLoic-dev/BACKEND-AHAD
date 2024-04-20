@@ -80,7 +80,7 @@ const Transfert = ({route, navigation}) => {
               setIsLoading(false);
               console.log(result.data);
               console.log("Transaction effectué avec succès");
-              navigation.navigate("Complete", {Montant : amount, Solde : solde})
+              navigation.navigate("Complete", {Montant : amount, Solde : solde, Type : 'Recharge'})
             }
           }).catch((err) => {
             console.error("Error" + err);
@@ -88,6 +88,7 @@ const Transfert = ({route, navigation}) => {
         }
       })
       .catch((err) => {
+        setIsLoading(false);
         console.error("Error" + err);
       });
   };
