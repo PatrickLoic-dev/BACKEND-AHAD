@@ -289,15 +289,8 @@ if(cotisations == []){
     const rubriqueId = req.params.id;
     try {
         const transactions = await Cotisation.find({ rubrique: rubriqueId }).populate('users');
-        let totalAmount = 0;
-        const users = transactions.map(transaction => {
-            totalAmount += transaction.montant;
-            return {
-                name: transaction.user.name,
-                avatar: transaction.user.avatar
-            };
-        });
-        res.send({ totalAmount, users });
+        
+        res.send(transactions);
     } catch (error) {
         res.status(500).send(error);
     }
