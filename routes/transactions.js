@@ -100,6 +100,21 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
     }
 })
 
+.patch('/users/me', authentification, async (req, res, next) => {
+    const updatedInfo = Object.keys(req.body);
+
+
+    try {
+
+        updatedInfo.forEach(update => req.user[update] = req.body[update]);
+        await req.user.save();
+
+        res.send(req.user);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+  
 //Modification des données d'un utilisateur
 .patch('/users/:id', authentification, upload.single('avatar'), async (req, res, next) => {
     const updatedInfo = Object.keys(req.body);
@@ -124,20 +139,6 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
     }
 })
   
-.patch('/users/me', authentification, async (req, res, next) => {
-    const updatedInfo = Object.keys(req.body);
-
-
-    try {
-
-        updatedInfo.forEach(update => req.user[update] = req.body[update]);
-        await req.user.save();
-
-        res.send(req.user);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-})
 
   
 //Supression d'un utilisateur spécifique par son id
