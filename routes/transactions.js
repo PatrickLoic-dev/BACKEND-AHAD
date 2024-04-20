@@ -288,7 +288,7 @@ if(cotisations == []){
 .get('/cotisations/rubrique/montant/:id', authentification, async (req, res) => {
     const rubriqueId = req.params.id;
     try {
-        const transactions = await Cotisation.find({ rubrique: rubriqueId }).populate('users');
+        const transactions = await Cotisation.find({ rubrique: rubriqueId });
         
         res.send(transactions);
     } catch (error) {
