@@ -138,9 +138,8 @@ router.post('/users', upload.single('avatar'), async (req, res, next) => {
         res.status(500).send(error);
     }
 })
-  
 
-  
+
 //Supression d'un utilisateur spécifique par son id
 .delete('/users/:id', authentification, async (req, res, next) =>{
     const userId = req.params.id;
