@@ -6,6 +6,7 @@ import Transfert from '../view/charge_mobile/my_number';
 import PayementSent from '../view/charge_mobile/payement_sent';
 import Cotisation from '../view/transfert_to_card/cotisation';
 import CotisationSent from '../view/transfert_to_card/cotisation_sent';
+import AddRubrique from '../view/rubriques/addRubrique';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,10 @@ const PayementStack = () => {
         <Stack.Screen 
             name="CotisationComplete" 
             component={CotisationSent} />
+
+        <Stack.Screen   
+            name="AjouterRubrique" 
+            component={AddRubrique} />    
     
 
         <Stack.Screen 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { abstractBackgroundYellowBlue } from '../../utils/images';
 import SelectBox from 'react-native-multiple-selectbox'
@@ -6,6 +6,7 @@ import { xorBy } from 'lodash'
 import { Ionicons } from '@expo/vector-icons';
 import Input from '../../components/input';
 import * as ImagePicker from 'expo-image-picker';
+import { GetRubriques } from '../../api/RubriqueAPI';
 
 const rubriques = [
     {
@@ -35,13 +36,17 @@ const rubriques = [
   ]
 
 const AddRubrique = () => {
+  const [Rubriques, setRubriques] = useState([])
+  const [selectedRubriques, setSelectedRubriques] = useState([])
 
-  const GetProfile = () =>{
-    Profile().then((result) => {
-        console.log("Rubriques :" + result.data.rubriques);
-        result.data.rubriques.forEach(rubrique => {
-          rubriques.push(rubrique);
-        });
+  useEffect(() => {
+    CollectRubriques();
+  }, []);
+
+  const CollectRubriques = () =>{
+    GetRubriques().then((result) => {
+        console.log("Rubriques :" + result.data);
+        setRubriques(result.data)
         console.log(data);
     }).catch(err => {
         console.error("Error"+ err);    
@@ -59,7 +64,7 @@ const AddRubrique = () => {
       <Text style={{ fontSize: 20, paddingBottom: 4 }}>Rubriques</Text>
       <SelectBox
         label=''
-        options={rubriques}
+        options={Rubriques}
         selectedValues={selectedTeams}
         onMultiSelect={onMultiChange()}
         onTapClose={onMultiChange()}
@@ -76,12 +81,9 @@ const AddRubrique = () => {
   )
 
   function onMultiChange() {
-    return (item) => setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
+    return (item) => setSelectedRubriques(xorBy(selectedTeams, [item], 'id'))
   }
 
-  function onChange() {
-    return (val) => setSelectedTeam(val)
-  }
 
 
 };

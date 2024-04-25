@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image,FlatList, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { abstractBackground, avatar, calendar, card, category, chevron, coin, exchange, invoice, search } from '../../utils/images';
 import { principalColor, textSecondaryColor } from '../../utils/constantes';
 import { GetCotisations, Profile } from '../../api/userAPI';
@@ -92,7 +92,7 @@ const Acceuil = ({navigation}) => {
                     <TouchableOpacity style = {styles.btn}>
                         <Image source={category}/>
                     </TouchableOpacity>
-                    <Text style = {{marginTop : 4, fontWeight : '900'}}>Plus</Text>
+                    <Text style = {{marginTop : 4, fontWeight : '900'}} onPress={()=> navigation.replace('AjouterRubrique')}>Plus</Text>
                 </View>
             </View>
 
